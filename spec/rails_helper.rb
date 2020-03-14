@@ -39,7 +39,7 @@ RSpec.configure do |config|
   # FactoryBot.create(...) => create(...) |new|create_list|...
   config.include FactoryBot::Syntax::Methods
 
-  Capybara.javascript_driver = :selenium_headless
+  Capybara.javascript_driver = :selenium_chrome_headless
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
