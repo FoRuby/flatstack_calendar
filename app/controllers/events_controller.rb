@@ -22,7 +22,7 @@ class EventsController < ApplicationController
 
   def update
     @event.update(event_params)
-    flash.now[:success] = 'TEST'
+    flash.now[:success] = 'Event was succesfully updated!'
   end
 
   def destroy

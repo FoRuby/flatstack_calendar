@@ -1,6 +1,8 @@
-$('#calendar').fullCalendar('removeEvents', [<%= @event.id %>]);
-$('#calendar').fullCalendar(
-  'renderEvent',
-  $.parseJSON("<%=j raw(render(@event, format: :json)) %>")
-);
-$('.flash-messages').html("<%=j render 'shared/messages' %>");
+<% if @event.errors.blank? %>
+  $('#calendar').fullCalendar('removeEvents', [<%= @event.id %>]);
+  $('#calendar').fullCalendar(
+    'renderEvent',
+    $.parseJSON("<%=j raw(render(@event, format: :json)) %>")
+  );
+  $('.flash-messages').html("<%=j render 'shared/messages' %>");
+<% end %>
