@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap'
 gem 'slim'
 gem 'jquery-rails'
+gem 'simple_form'
 
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
