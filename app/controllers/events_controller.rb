@@ -3,11 +3,9 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
-    render json: @events, adapter: :attributes
   end
 
   def show
-    render json: @event
   end
 
   def new
@@ -24,6 +22,7 @@ class EventsController < ApplicationController
 
   def update
     @event.update(event_params)
+    flash.now[:success] = 'TEST'
   end
 
   def destroy
