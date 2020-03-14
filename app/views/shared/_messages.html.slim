@@ -1,0 +1,7 @@
+- flash.each do |type, message|
+  .alert.alert-dismissible.fade.show *{role: 'alert', class: "alert-#{type}"}
+    span = message
+    button.close *{type: 'button',
+                   data: {dismiss: 'alert'},
+                   aria: {label: 'Close'}}
+      span *{aria: {hidden: 'true'}} &times;
