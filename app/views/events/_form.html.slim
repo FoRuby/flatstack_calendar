@@ -1,9 +1,9 @@
 .modal-body
-  = form_with model: @event, url: events_path(@event), method: :post do |f|
+  = form_with model: @event, url: events_path(@event), method: :post, remote: true do |f|
 
     .form-group
       = f.label :title
-      = f.text_field :title, class: 'form-control', placeholder: 'Enter event title'
+      = f.text_field :title, class: 'form-control', placeholder: 'Enter event title', required: true
 
     .form-group
       = f.label :description
@@ -21,7 +21,7 @@
 
     .row
       .col.form-group
-        = f.date_field :start_date, value: Date.today, class: 'form-control'
+        = f.date_field :start_date, value: Date.today, class: 'form-control', required: true
 
       .col.form-group
         = f.date_field :end_date, value: Date.today, class: 'form-control'

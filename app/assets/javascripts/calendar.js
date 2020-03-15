@@ -1,15 +1,30 @@
-function initializeCalendar() {
+function eventCalendar() {
   calendar = $('#calendar')
-  console.log(calendar);
   calendar.fullCalendar({
     header: {
       left: 'prev, next, today',
       center: 'title',
       right: 'month, listMonth'
+      // right: 'month, listMonth, timeGridFourDay'
     },
 
-    eventRender: function(event, eventElement) {
+    // views: {
+    //   timeGridFourDay: {
+    //     type: 'listMonth',
+    //     duration: { days: 4 },
+    //     buttonText: '4 day',
+    //     selectable: true,
+    //     editable: true,
+    //     eventLimit: true
+    //   }
+    // },
+
+    eventRender: function(event, eventElement, info) {
       eventElement.attr('id', 'event-' + event.id);
+    },
+
+    eventAfterRender: function() {
+      flash_handler();
     },
 
     selectable: true,
@@ -24,7 +39,6 @@ function initializeCalendar() {
         $('#event_end_date').val(end.format('YYYY-MM-DD'));
       });
       calendar.fullCalendar('unselect');
-      flash_fade_out();
     },
 
     eventDrop: function(event, delta, revertFunc) {
@@ -39,16 +53,17 @@ function initializeCalendar() {
       $.ajax({
         url: event.update_url,
         data: data,
-        type: 'PATCH',
-        success: function() {
-          flash_fade_out();
-        }
+        type: 'PATCH'
       });
 
     },
   })
 }
 
-$(document).on('turbolinks:load', function() {
-  initializeCalendar();
-})
+function clearCalendar() {
+  $('#calendar').fullCalendar('delete');
+  $('#calendar').html('');
+};
+
+$(document).on('turbolinks:load', eventCalendar);
+$(document).on('turbolinks:before-cache', clearCalendar);

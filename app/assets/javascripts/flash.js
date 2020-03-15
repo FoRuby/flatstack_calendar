@@ -1,7 +1,7 @@
-function flash_fade_out() {
-  setTimeout(function() {
-      $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $('.alert').remove();
-      });
-  }, 5000);
-}
+function flash_handler() {
+ setTimeout(function() {
+     $(".alert").fadeTo(400, 0).slideUp(400, function(){
+       $('.alert').remove();
+     });
+ }, 5000);
+};

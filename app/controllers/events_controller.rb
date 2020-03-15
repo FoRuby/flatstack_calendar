@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_event, only: %i[show update destroy]
 
   def index
     @events = Event.all
@@ -10,9 +10,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-  end
-
-  def edit
   end
 
   def create
@@ -28,6 +25,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
+    flash.now[:success] = 'Event was succesfully destroyed!'
   end
 
   private
