@@ -19,11 +19,19 @@ function eventCalendar() {
     //   }
     // },
 
-    eventRender: function(event, eventElement, info) {
-      eventElement.attr('id', 'event-' + event.id);
+    eventRender: function(eventObj, $el) {
+      $el.popover({
+        title: eventObj.title,
+        content: eventObj.description,
+        background: eventObj.color,
+        trigger: 'hover',
+        placement: 'top',
+        container: 'body'
+      });
     },
 
-    eventAfterRender: function() {
+    eventAfterRender: function(event ,element) {
+      element.attr('id', 'event-' + event.id);
       flash_handler();
     },
 
@@ -46,7 +54,11 @@ function eventCalendar() {
         event: {
           id: event.id,
           start_date: event.start.format(),
-          end_date: event.end.format()
+          end_date: function() {
+            if (event.end !== null){
+              return event.start.format()
+            }
+          }
         },
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
