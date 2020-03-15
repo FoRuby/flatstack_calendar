@@ -4,7 +4,7 @@ function eventCalendar() {
     header: {
       left: 'prev, next, today',
       center: 'title',
-      right: 'month, listMonth'
+      right: 'month'
       // right: 'month, listMonth, timeGridFourDay'
     },
 
@@ -26,7 +26,11 @@ function eventCalendar() {
         background: eventObj.color,
         trigger: 'hover',
         placement: 'top',
-        container: 'body'
+        container: 'body',
+        delay: {
+          "show": 300,
+          "hide": 100
+        }
       });
     },
 
@@ -42,11 +46,17 @@ function eventCalendar() {
     events: '/events.json',
 
     select: function(start, end) {
-      $.getScript('/events/new', function() {
-        $('#event_start_date').val(start.format('YYYY-MM-DD'));
-        $('#event_end_date').val(end.format('YYYY-MM-DD'));
+      data = { authenticity_token: $('[name="csrf-token"]')[0].content };
+      $.ajax({
+        url: '/events/new',
+        data: data,
+        type: 'GET',
+        success: function () {
+          $('#event_start_date').val(start.format('YYYY-MM-DD'));
+          $('#event_end_date').val(end.format('YYYY-MM-DD'));
+        }
       });
-      calendar.fullCalendar('unselect');
+
     },
 
     eventDrop: function(event, delta, revertFunc) {
@@ -56,19 +66,38 @@ function eventCalendar() {
           start_date: event.start.format(),
           end_date: function() {
             if (event.end !== null){
-              return event.start.format()
+              return event.end.format()
             }
           }
         },
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
       $.ajax({
-        url: event.update_url,
+        url: '/events/' + event.id,
         data: data,
         type: 'PATCH'
       });
 
     },
+
+    eventClick: function(event, jsEvent, view) {
+      data = {
+        event: { id: event.id, format: 'js' },
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      };
+      $.ajax({
+        url: '/events/' + event.id,
+        data: data,
+        type: 'GET',
+        success: function () {
+          edit_event_button_click_listener();
+          show_event_color();
+          cancel_event_button_click_listener();
+          color_change_listener();
+          title_change_listener();
+        }
+      });
+    }
   })
 }
 
