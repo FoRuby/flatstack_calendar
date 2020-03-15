@@ -47,21 +47,21 @@ RSpec.describe EventsController, type: :controller do
   describe 'DELETE #destroy' do
   end
 
-  # describe 'GET #new' do
-  #   before { get :new }
-  #
-  #   it 'assign the new event to @event' do
-  #     expect(assigns(:event)).to be_a_new(Event)
-  #   end
-  #
-  #   it 'render new view' do
-  #     expect(response).to render_template :new
-  #   end
-  #
-  #   it 'returns status :ok' do
-  #     expect(response).to have_http_status(:ok)
-  #   end
-  # end
+  describe 'GET #new' do
+    before { get :new, format: :js }
+
+    it 'assign the new event to @event' do
+      expect(assigns(:event)).to be_a_new(Event)
+    end
+
+    it 'render new view' do
+      expect(response).to render_template :new
+    end
+
+    it 'returns status :ok' do
+      expect(response).to have_http_status(:ok)
+    end
+  end
 
   describe 'PATCH #update' do
     context 'with valid attributes' do

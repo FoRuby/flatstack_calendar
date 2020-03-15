@@ -1,5 +1,5 @@
 .modal-body
-  = form_with model: @event, remote: true do |f|
+  = form_with model: @event, url: events_path(@event), method: :post do |f|
 
     .form-group
       = f.label :title

@@ -24,7 +24,7 @@ function initializeCalendar() {
         $('#event_end_date').val(end.format('YYYY-MM-DD'));
       });
       calendar.fullCalendar('unselect');
-
+      flash_fade_out();
     },
 
     eventDrop: function(event, delta, revertFunc) {
