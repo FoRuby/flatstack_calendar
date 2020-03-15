@@ -18,6 +18,15 @@ function initializeCalendar() {
     eventLimit: true,
     events: '/events.json',
 
+    select: function(start, end) {
+      $.getScript('/events/new', function() {
+        $('#event_start_date').val(start.format('YYYY-MM-DD'));
+        $('#event_end_date').val(end.format('YYYY-MM-DD'));
+      });
+      calendar.fullCalendar('unselect');
+
+    },
+
     eventDrop: function(event, delta, revertFunc) {
       data = {
         event: {
@@ -41,5 +50,5 @@ function initializeCalendar() {
 }
 
 $(document).on('turbolinks:load', function() {
-  initializeCalendar()
+  initializeCalendar();
 })

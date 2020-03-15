@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
+  attr_accessor :date_range
+
   COLOR_REGEX = /\A#[0-9a-f]{3,6}\z/i
-  EVENT_TYPES = %w[public private]
+  EVENT_TYPES = %w[private public]
 
   scope :public_events, -> { where(event_type: 'public') }
 
