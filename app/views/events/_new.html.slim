@@ -1,0 +1,11 @@
+.modal.fade.new-event-modal id="event-#{@event.id}" role="dialog" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        .modal-title Create New Event
+        button.close *{type: 'button',
+                       data: {dismiss: 'modal'},
+                       aria: {label: 'Close'}}
+          span *{aria: {hidden: 'true'}} &times;
+
+      = render 'form', event: @event, url: events_path(@event), method: :post

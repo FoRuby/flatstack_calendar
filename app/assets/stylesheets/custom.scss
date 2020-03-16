@@ -1,0 +1,11 @@
+.hidden {
+  display: none;
+}
+
+.popover {
+  background: #007bff;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #007bff;
+}

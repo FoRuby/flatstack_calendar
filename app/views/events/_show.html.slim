@@ -1,0 +1,26 @@
+.modal.fade.show-event-modal id="event-#{@event.id}" role="dialog" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        h1 = @event.title
+
+      .edit-form.hidden
+        = render 'form', event: @event, url: event_path(@event), method: 'patch'
+
+      .show-form
+        .modal-body
+          .color.hidden = @event.color
+          p = @event.description
+          h3= @event.date_range
+          h3= @event.days_between
+
+        .modal-footer
+          = link_to 'Cancel', '#', class: 'button btn btn-primary cancel-event-button'
+          = link_to 'Edit event', '#', class: 'button btn btn-primary edit-event-button'
+
+          = link_to 'Delete event',
+                    event_path(@event),
+                    class: 'button btn btn-danger',
+                      method: :delete,
+                      remote: true,
+                      data: { confirm: "Are you sure?" }

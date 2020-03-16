@@ -1,0 +1,10 @@
+<% if @event.errors.blank? %>
+  $('.flash-messages').html("<%= j render 'shared/messages' %>");
+  $('#calendar').fullCalendar('removeEvents', [<%= @event.id %>]);
+  $('#calendar').fullCalendar(
+    'renderEvent',
+    $.parseJSON("<%= j raw(render(@event, format: :json)) %>"),
+    true
+  );
+  $('.show-event-modal').modal('hide');
+<% end %>
