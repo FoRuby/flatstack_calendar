@@ -182,17 +182,19 @@ RSpec.describe EventsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      before do
-        patch :update, params: {
+      let(:params) do
+        {
           id: event,
           event: attributes_for(:event, :invalid_event),
           format: :js
         }
       end
+      before { patch :update, params: params }
 
       it 'does not change event attributes' do
-        expect { event.reload }.to not_change(event, :title)
+        expect { patch :update, params: params }.to not_change(event, :title)
           .and not_change(event, :start_date)
+          .and not_change(event, :end_date)
           .and not_change(event, :event_type)
           .and not_change(event, :color)
       end

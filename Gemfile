@@ -30,6 +30,8 @@ gem 'jquery-rails'
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 
+gem 'ice_cube'
+gem 'recurring_select'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

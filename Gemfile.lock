@@ -54,8 +54,6 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    bootstrap-daterangepicker-rails (3.0.4)
-      railties (>= 4.0)
     builder (3.2.4)
     byebug (11.1.1)
     capybara (3.31.0)
@@ -95,6 +93,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
+    ice_cube (0.16.3)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
     jquery-rails (4.3.5)
@@ -164,6 +163,12 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    recurring_select (2.1.0)
+      coffee-rails (>= 3.1)
+      ice_cube (>= 0.11)
+      jquery-rails (>= 3.0)
+      rails (>= 3.2)
+      sass-rails (>= 4.0)
     regexp_parser (1.7.0)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
@@ -250,13 +255,13 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap
-  bootstrap-daterangepicker-rails
   byebug
   capybara (>= 2.15)
   coffee-rails (~> 4.2)
   factory_bot_rails
   faker
   fullcalendar-rails
+  ice_cube
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
@@ -265,6 +270,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.3)
   rails-controller-testing
+  recurring_select
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver

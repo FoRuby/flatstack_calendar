@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   let(:event) { create(:event) }
-  let(:event_without_end_date) { create(:event, callback?: false) }
 
   describe 'associations' do
     # it { should belong_to(:user) }
@@ -23,6 +22,7 @@ RSpec.describe Event, type: :model do
   describe 'validations' do
     it { should validate_presence_of :title }
     it { should validate_presence_of :start_date }
+    it { should validate_presence_of :end_date }
     it { should validate_presence_of :event_type }
     it { should validate_presence_of :color }
 
@@ -35,40 +35,22 @@ RSpec.describe Event, type: :model do
 
   describe 'methods' do
     describe '#date_range' do
-      context 'event without end date' do
-        it 'return only formated start date' do
-          expect(event_without_end_date.date_range)
-            .to eq event_without_end_date.start_date.strftime(Event::DATE_FORMAT)
-        end
-      end
+      it 'return date range' do
+        start_date = event.start_date.strftime(Event::DATE_FORMAT)
+        end_date = event.end_date.strftime(Event::DATE_FORMAT)
 
-      context 'event with start and end date' do
-        it 'return date range' do
-          start_date = event.start_date.strftime(Event::DATE_FORMAT)
-          end_date = event.end_date.strftime(Event::DATE_FORMAT)
-
-          expect(event.date_range).to eq "#{start_date} — #{end_date}"
-        end
+        expect(event.date_range).to eq "#{start_date} — #{end_date}"
       end
     end
+
     describe '#days_between' do
-      context 'event without end date' do
-        it 'return message' do
-          expect(event_without_end_date.days_between)
-            .to eq 'Event end date not set'
-        end
+      let(:event) do
+        create(:event, start_date: Time.now,
+                       end_date: Time.now + 1.day)
       end
 
-      context 'event with start and end date' do
-        let(:event) do
-          create(:event, start_date: Date.current,
-                         end_date: Date.current + 1,
-                         callback?: false)
-        end
-
-        it 'return event duration' do
-          expect(event.days_between).to eq 'Event duration: 2 days'
-        end
+      it 'return event duration' do
+        expect(event.days_between).to eq 'Event duration: 2 days'
       end
     end
   end
