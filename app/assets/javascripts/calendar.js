@@ -54,9 +54,9 @@ function eventCalendar() {
         success: function () {
           $('#event_start_date').val(start.format('YYYY-MM-DD'));
           $('#event_end_date').val(end.format('YYYY-MM-DD'));
+          cancel_event_button_click_listener();
         }
       });
-
     },
 
     eventDrop: function(event, delta, revertFunc) {
@@ -77,7 +77,6 @@ function eventCalendar() {
         data: data,
         type: 'PATCH'
       });
-
     },
 
     eventClick: function(event, jsEvent, view) {

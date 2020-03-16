@@ -46,9 +46,80 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe 'POST #create' do
+    context 'with valid attributes' do
+      let(:params) do
+        { event: attributes_for(:event, event_type: 'public'), format: :js }
+      end
+
+      before { post :create, params: params }
+
+      it 'save event in db' do
+        expect { post :create, params: params }.to change(Event, :count)
+      end
+
+      it 'render create view' do
+        expect(response).to render_template :create
+      end
+
+      it 'respond with js format' do
+        expect(response.content_type).to eq 'text/javascript'
+      end
+
+      it 'returns status :ok' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:params) do
+        { event: attributes_for(:event, :invalid_event), format: :js }
+      end
+
+      before { post :create, params: params }
+
+      it 'does not save event in db' do
+        expect { post :create, params: params }.to_not change(Event, :count)
+      end
+
+      it 'render create view' do
+        expect(response).to render_template :create
+      end
+
+      it 'respond with js format' do
+        expect(response.content_type).to eq 'text/javascript'
+      end
+
+      it 'returns status :ok' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
+    let!(:event) { create(:event) }
+    let(:params) { { id: event, format: :js } }
+
+    it 'delete event from db' do
+      expect { delete :destroy, params: params }.to change(Event, :count)
+    end
+
+    it 'render destroy view' do
+      delete :destroy, params: params
+
+      expect(response).to render_template :destroy
+    end
+
+    it 'respond with js format' do
+      delete :destroy, params: params
+
+      expect(response.content_type).to eq 'text/javascript'
+    end
+
+    it 'returns status :ok' do
+      delete :destroy, params: params
+
+      expect(response).to have_http_status(:ok)
+    end
   end
 
   describe 'GET #new' do
