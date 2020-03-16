@@ -1,10 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
 
-  def index
-    @events = Event.all
-  end
-
   def show
   end
 
@@ -37,9 +33,12 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:title,
                                   :description,
-                                  :start_date,
-                                  :end_date,
-                                  :event_type,
-                                  :color)
+                                  :date,
+                                  :duration,
+                                  :visibility,
+                                  :color,
+                                  :shedule,
+                                  :recurring_start_date,
+                                  :recurring_end_date)
   end
 end

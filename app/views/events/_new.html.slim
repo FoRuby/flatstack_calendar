@@ -1,4 +1,4 @@
-.modal.fade.new-event-modal id="event-#{@event.id}" role="dialog" aria-hidden="true"
+.modal.fade.new-event-modal role="dialog" aria-hidden="true"
   .modal-dialog role="document"
     .modal-content
       .modal-header
@@ -8,4 +8,38 @@
                        aria: {label: 'Close'}}
           span *{aria: {hidden: 'true'}} &times;
 
-      = render 'form', event: @event, url: events_path(@event), method: :post
+      .container
+        .row
+          .col-xs-12
+            .nav
+              .nav.nav-tabs.nav-fill id='nav-tab' role='tablist'
+                a.nav-item.nav-link.active#nav-simple-event-tab[
+                  data-toggle='tab'
+                  href='#nav-simple-event'
+                  role='tab'
+                  aria-controls='nav-simple-event'
+                  aria-selected='true'
+                ] Home
+                a.nav-item.nav-link#nav-recurring_event-tab[
+                  data-toggle='tab'
+                  href='#nav-recurring_event'
+                  role='tab'
+                  aria-controls='nav-recurring_event'
+                  aria-selected='false'
+                ] Profile
+
+            .tab-content#nav-tabContent
+              .tab-pane.fade.show.active#nav-simple-event[
+                role='tabpanel'
+                aria-labelledby='nav-simple-event-tab']
+
+                = render 'events/simple_event_new_form',
+                  event: @event, url: events_path, method: :post
+
+
+              .tab-pane.fade#nav-recurring_event[
+                role='tabpanel'
+                aria-labelledby='nav-recurring_event-tab']
+
+                = render 'events/recurring_event_new_form',
+                  event: @recurring_event, url: events_path, method: :post

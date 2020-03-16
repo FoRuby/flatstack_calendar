@@ -1,22 +1,21 @@
 class Event < ApplicationRecord
   COLOR_REGEX = /\A#[0-9a-f]{3,6}\z/i
   EVENT_TYPES = %w[private public]
-  DATE_FORMAT = '%M:%H %d %B %Y'
 
-  scope :public_events, -> { where(event_type: 'public') }
+  scope :public_events, -> { where(visibility: 'public') }
+  scope :simple_events, -> { where(type: 'Event') }
 
-  validates :title, :start_date, :end_date, :event_type, :color, presence: true
+  validates :title, :date, :duration, :visibility, :color, presence: true
+  validates :duration, numericality: { only_integer: true, greater_than: 0 }
   validates :color, format: { with: COLOR_REGEX }
-  validates :event_type, inclusion: { in: EVENT_TYPES, message:
+  validates :visibility, inclusion: { in: EVENT_TYPES, message:
     "%{value} should be 'private' or 'public'" }
 
-  def date_range
-    "#{start_date.strftime(DATE_FORMAT)} — #{end_date.strftime(DATE_FORMAT)}"
+  def recurring_event?
+    type == 'RecurringEvent'
   end
 
-  def days_between
-    days = (start_date.to_date..end_date.to_date).count
-    pluralization = 'day'.pluralize(days)
-    "Event duration: #{days} #{pluralization}"
+  def end_date
+    date + duration
   end
 end

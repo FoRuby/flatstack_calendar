@@ -3,28 +3,6 @@ require 'rails_helper'
 RSpec.describe EventsController, type: :controller do
   let(:event) { create(:event) }
 
-  describe 'GET #index' do
-    let(:events) { create_list(:event, 2) }
-
-    before { get :index, format: :json }
-
-    it 'show an array of all questions' do
-      expect(assigns(:events)).to match_array(events)
-    end
-
-    it 'render index view' do
-      expect(response).to render_template :index
-    end
-
-    it 'respond with json format' do
-      expect(response.content_type).to eq 'application/json'
-    end
-
-    it 'returns status :ok' do
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe 'GET #show' do
     before { get :show, params: { id: event }, format: :js, xhr: true }
 
@@ -48,7 +26,7 @@ RSpec.describe EventsController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       let(:params) do
-        { event: attributes_for(:event, event_type: 'public'), format: :js }
+        { event: attributes_for(:event), format: :js }
       end
 
       before { post :create, params: params }
@@ -144,12 +122,14 @@ RSpec.describe EventsController, type: :controller do
 
   describe 'PATCH #update' do
     context 'with valid attributes' do
-      let(:event_attributes) { attributes_for(:event) }
-
       before do
         patch :update, params: {
           id: event,
-          event: attributes_for(:event, event_type: 'public'),
+          event: build(:recurring_event,
+                       :monthly,
+                       date: Date.current,
+                       duration: 10,
+                       visibility: 'public').attributes,
           format: :js
         }
       end
@@ -159,13 +139,13 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it 'change event attributes' do
-        expect { event.reload } .to change(event, :title)
-          .and change(event, :title)
+        expect { event.reload }.to change(event, :title)
           .and change(event, :description)
-          .and change(event, :start_date)
-          .and change(event, :end_date)
-          .and change(event, :event_type)
+          .and change(event, :date)
+          .and change(event, :duration)
           .and change(event, :color)
+          .and change(event, :recurring_start_date)
+          .and change(event, :recurring_end_date)
       end
 
       it 'render update view' do
@@ -193,9 +173,9 @@ RSpec.describe EventsController, type: :controller do
 
       it 'does not change event attributes' do
         expect { patch :update, params: params }.to not_change(event, :title)
-          .and not_change(event, :start_date)
-          .and not_change(event, :end_date)
-          .and not_change(event, :event_type)
+          .and not_change(event, :recurring_start_date)
+          .and not_change(event, :recurring_end_date)
+          .and not_change(event, :visibility)
           .and not_change(event, :color)
       end
 

@@ -43,32 +43,33 @@ function eventCalendar() {
     selectHelper: true,
     editable: true,
     eventLimit: true,
-    events: '/events.json',
+    eventSources: [
+      '/calendar/simple_events.json',
+      '/calendar/recurring_events.json'
+    ],
 
     select: function(start, end) {
       data = { authenticity_token: $('[name="csrf-token"]')[0].content };
-      $.ajax({
-        url: '/events/new',
-        data: data,
-        type: 'GET',
-        success: function () {
-          $('#event_start_date').val(start.format('YYYY-MM-DD'));
-          $('#event_end_date').val(end.format('YYYY-MM-DD'));
-          cancel_event_button_click_listener();
-        }
-      });
+      $('.new-event-modal').modal();
+      $('#event_date').val(start.format('YYYY-MM-DD'));
+      $('#event_recurring_start_date').val(start.format('YYYY-MM-DD'));
+      $('#event_recurring_end_date').val(end.format('YYYY-MM-DD'));
+      cancel_event_button_click_listener();
+      // $.ajax({
+      //   url: '/events/new',
+      //   data: data,
+      //   type: 'GET',
+      //   success: function () {
+      //
+      //   }
+      // });
     },
 
     eventDrop: function(event, delta, revertFunc) {
       data = {
         event: {
           id: event.id,
-          start_date: event.start.format(),
-          end_date: function() {
-            if (event.end !== null){
-              return event.end.format()
-            }
-          }
+          date: event.start.format(),
         },
         authenticity_token: $('[name="csrf-token"]')[0].content
       };

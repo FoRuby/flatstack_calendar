@@ -4,11 +4,11 @@ class EventSerializer < ActiveModel::Serializer
   attributes :id, :title, :start, :end, :color, :update_url, :edit_url
 
   def start
-    object.start_date
+    object.recurring_start_date
   end
 
   def end
-    object.end_date
+    object.recurring_end_date
   end
 
   def edit_url
