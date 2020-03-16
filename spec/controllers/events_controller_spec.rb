@@ -26,14 +26,18 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: event } }
+    before { get :show, params: { id: event }, format: :js, xhr: true }
 
     it 'assign the requested event to @event' do
       expect(assigns(:event)).to eq event
     end
 
-    it 'render index view' do
+    it 'render show view' do
       expect(response).to render_template :show
+    end
+
+    it 'respond with js format' do
+      expect(response.content_type).to eq 'text/javascript'
     end
 
     it 'returns status :ok' do
@@ -48,7 +52,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { get :new, format: :js }
+    before { get :new, format: :js, xhr: true }
 
     it 'assign the new event to @event' do
       expect(assigns(:event)).to be_a_new(Event)
@@ -56,6 +60,10 @@ RSpec.describe EventsController, type: :controller do
 
     it 'render new view' do
       expect(response).to render_template :new
+    end
+
+    it 'respond with js format' do
+      expect(response.content_type).to eq 'text/javascript'
     end
 
     it 'returns status :ok' do

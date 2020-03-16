@@ -6,6 +6,14 @@ FactoryBot.define do
     end_date {}
     event_type { 'private' }
     color { Faker::Color.hex_color }
+
+    transient do
+      callback? { true }
+    end
+  end
+
+  after :build do |event, options|
+    event.end_date = event.start_date + rand(7) if options.callback?
   end
 
   trait :invalid_event do
@@ -13,9 +21,5 @@ FactoryBot.define do
     start_date { nil }
     event_type { 'foobar' }
     color { 'foobar' }
-  end
-
-  after :build do |event|
-    event.end_date = event.start_date + rand(7)
   end
 end

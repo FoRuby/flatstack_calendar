@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   let(:event) { create(:event) }
+  let(:event_without_end_date) { create(:event, callback?: false) }
 
   describe 'associations' do
     # it { should belong_to(:user) }
@@ -33,5 +34,42 @@ RSpec.describe Event, type: :model do
   end
 
   describe 'methods' do
+    describe '#date_range' do
+      context 'event without end date' do
+        it 'return only formated start date' do
+          expect(event_without_end_date.date_range)
+            .to eq event_without_end_date.start_date.strftime(Event::DATE_FORMAT)
+        end
+      end
+
+      context 'event with start and end date' do
+        it 'return date range' do
+          start_date = event.start_date.strftime(Event::DATE_FORMAT)
+          end_date = event.end_date.strftime(Event::DATE_FORMAT)
+
+          expect(event.date_range).to eq "#{start_date} — #{end_date}"
+        end
+      end
+    end
+    describe '#days_between' do
+      context 'event without end date' do
+        it 'return message' do
+          expect(event_without_end_date.days_between)
+            .to eq 'Event end date not set'
+        end
+      end
+
+      context 'event with start and end date' do
+        let(:event) do
+          create(:event, start_date: Date.current,
+                         end_date: Date.current + 1,
+                         callback?: false)
+        end
+
+        it 'return event duration' do
+          expect(event.days_between).to eq 'Event duration: 2 days'
+        end
+      end
+    end
   end
 end
