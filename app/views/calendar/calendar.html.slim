@@ -1,6 +1,7 @@
 .flash-messages
-= render 'events/new', event: @event, recurring_event: @recurring_event
-p = @event
+= render 'events/new', simple_event: @simple_event, recurring_event: @recurring_event
+
+p = @simple_event
 p = @recurring_event
 
 #event-container

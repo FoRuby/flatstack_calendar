@@ -33,13 +33,13 @@
                 role='tabpanel'
                 aria-labelledby='nav-simple-event-tab']
 
-                = render 'events/simple_event_new_form',
-                  event: @event, url: events_path, method: :post
+                = render 'simple_events/simple_event_form',
+                  event: @simple_event, url: simple_events_path, method: :post
 
 
-              .tab-pane.fade#nav-recurring_event[
-                role='tabpanel'
-                aria-labelledby='nav-recurring_event-tab']
-
-                = render 'events/recurring_event_new_form',
-                  event: @recurring_event, url: events_path, method: :post
+              / .tab-pane.fade#nav-recurring_event[
+              /   role='tabpanel'
+              /   aria-labelledby='nav-recurring_event-tab']
+              /
+              /   = render 'recurring_events/recurring_event_form',
+              /     event: @recurring_event, url: recurring_events_path, method: :post

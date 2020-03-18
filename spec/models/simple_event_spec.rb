@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SimpleEvent, type: :model do
-  let(:simple_event) { create(:simple_event) }
+  let(:simple_event) { create :simple_event }
 
   describe 'associations' do
     # it { should belong_to(:user) }

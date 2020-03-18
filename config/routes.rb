@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   get 'calendar/simple_events'
   get 'calendar/recurring_events'
 
-  resources :events
+  resources :recurring_events
+  resources :simple_events
 end

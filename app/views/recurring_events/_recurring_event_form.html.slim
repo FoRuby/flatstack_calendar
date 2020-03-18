@@ -1,0 +1,38 @@
+= form_with model: @event,
+            url: @url,
+            method: @method,
+            scope: :event,
+            remote: true do |f|
+  .modal-body
+    .form-group
+      = f.label :title
+      = f.text_field :title, class: 'form-control',
+                             placeholder: 'Enter event title',
+                             required: true
+
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: 'form-control',
+                                  placeholder: 'Enter event description'
+
+    .row
+      .col.form-group
+        = f.label :start_date
+        = f.date_field :start_date, class: 'form-control', required: true
+
+      .col.form-group
+        = f.label :end_date
+        = f.date_field :end_date, class: 'form-control', required: true
+
+    .row
+      .col.form-group
+        = f.label :color
+        = f.color_field :color, class: 'form-control'
+
+      .col.form-group
+        = f.label :visibility
+        = f.select :visibility, Event::EVENT_TYPES, class: 'text-center form-control form-control-lg'
+
+  .modal-footer
+    = link_to 'Cancel', '#', class: 'button btn btn-primary cancel-event-button'
+    = f.submit class: 'button btn btn-primary'

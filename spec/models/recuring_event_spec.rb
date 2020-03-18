@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RecurringEvent, type: :model do
-  let(:recurring_event) { create(:recurring_event, :daily) }
+  let(:recurring_event) { create :recurring_event, :daily }
 
   describe 'associations' do
   end
@@ -11,11 +11,11 @@ RSpec.describe RecurringEvent, type: :model do
 
   describe 'validations' do
     let(:recurring_event_with_invalid_date) do
-      build(:recurring_event, :daily, start_date: Date.current + 2,
-                                      end_date: Date.current + 1)
+      build :recurring_event, :daily, start_date: Date.current + 2,
+                                      end_date: Date.current + 1
     end
 
-    subject { build(:recurring_event, :daily) }
+    subject { build :recurring_event, :daily }
 
     it { should validate_presence_of :recurrence }
     # it { should validate_presence_of :start_date }
@@ -44,10 +44,10 @@ RSpec.describe RecurringEvent, type: :model do
   describe 'methods' do
     context '#dates' do
       let(:recurring_event) do
-        build(:recurring_event,
+        build :recurring_event,
               :daily,
               start_date: Date.current,
-              end_date: Date.current + 10)
+              end_date: Date.current + 10
       end
 
       it 'should return dates array' do

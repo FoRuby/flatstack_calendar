@@ -1,44 +1,37 @@
-class EventsController < ApplicationController
+class SimpleEventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
 
   def show
   end
 
-  def new
-    @event = Event.new
-  end
-
   def create
-    @event = Event.new(event_params)
-    @event.save
+    @simple_event = SimpleEvent.new(simple_event_params)
+    @simple_event.save
     flash.now[:success] = 'Event was succesfully created!'
   end
 
   def update
-    @event.update(event_params)
+    @simple_event.update(simple_event_params)
     flash.now[:success] = 'Event was succesfully updated!'
   end
 
   def destroy
-    @event.destroy
+    @simple_event.destroy
     flash.now[:success] = 'Event was succesfully destroyed!'
   end
 
   private
 
   def set_event
-    @event = Event.find(params[:id])
+    @simple_event = SimpleEvent.find(params[:id])
   end
 
-  def event_params
+  def simple_event_params
     params.require(:event).permit(:title,
                                   :description,
-                                  :date,
-                                  :duration,
                                   :visibility,
                                   :color,
-                                  :shedule,
-                                  :recurring_start_date,
-                                  :recurring_end_date)
+                                  :date,
+                                  :duration)
   end
 end

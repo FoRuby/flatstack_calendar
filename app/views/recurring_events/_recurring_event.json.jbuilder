@@ -6,4 +6,6 @@ json.array! recurring_range do |recurring_date|
   json.start recurring_date
   json.end recurring_date
   json.color recurring_event.color
+
+  json.path recurring_event_path(recurring_event)
 end

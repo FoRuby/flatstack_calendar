@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'capybara/rspec'
+require 'selenium/webdriver'
 
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -42,12 +43,13 @@ RSpec.configure do |config|
   # FactoryBot.create(...) => create(...) |new|create_list|...
   config.include FactoryBot::Syntax::Methods
 
-  Capybara.javascript_driver = :selenium_chrome_headless
   RSpec::Matchers.define_negated_matcher :not_change, :change
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  # Capybara.javascript_driver = :selenium_headless
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -77,21 +79,39 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
+# Capybara.register_driver :firefox do |app|
+#   Capybara::Selenium::Driver.new(app, browser: :firefox)
+# end
+#
+# Capybara.register_driver :headless_firefox do |app|
+#   options = Selenium::WebDriver::Firefox::Options.new
+#   options.headless! # added on https://github.com/SeleniumHQ/selenium/pull/4762
+#
+#   Capybara::Selenium::Driver.new app,
+#     browser: :firefox,
+#     options: options
+# end
+#
+# Capybara.javascript_driver = :headless_firefox
 
-Capybara.register_driver :headless_chrome do |app|
+
+Capybara.register_driver :selenium_chrome_headless do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: {
-      args: %w[headless enable-features=NetworkService,NetworkServiceInProcess]
+      args: %w[
+        headless
+        enable-features=NetworkService
+        NetworkServiceInProcess
+      ]
     }
   )
 
-  Capybara::Selenium::Driver.new app,
+  Capybara::Selenium::Driver.new(
+    app,
     browser: :chrome,
     desired_capabilities: capabilities
+  )
 end
 
-Capybara.default_driver = :headless_chrome
-Capybara.javascript_driver = :headless_chrome
+Capybara.default_driver = :selenium_chrome_headless
+Capybara.javascript_driver = :selenium_chrome_headless

@@ -19,14 +19,15 @@ function edit_event_button_click_listener() {
 };
 
 function color_change_listener() {
-  $('#event_color').change(function(e) {
-    color = $('#event_color').val();
-    $('.modal-header').css('background-color', color);
+  $('.color-input').on('change', function() {
+    color = $(this).val();
+    $('.show-event-modal.modal-header').css('background-color', color);
   });
 };
 
 function title_change_listener() {
   $('.event-title-form input').on('input', function () {
+    // text = $(this).val();
     $(".modal-header h1").text($(this).val());
   });
 };

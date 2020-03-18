@@ -1,11 +1,11 @@
 class CalendarController < ApplicationController
   def calendar
-    @event = FactoryBot.build(:event)
-    @recurring_event = FactoryBot.build(:recurring_event)
+    @simple_event = SimpleEvent.new
+    @recurring_event = RecurringEvent.new
   end
 
   def simple_events
-    @events = Event.public_events.simple_events.all
+    @simple_events = SimpleEvent.public_events.all
   end
 
   def recurring_events

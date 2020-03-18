@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :event, class: 'Event' do
     title { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
-    visibility { 'private' }
+    visibility { 'public' }
     color { Faker::Color.hex_color }
   end
 

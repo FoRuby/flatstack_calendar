@@ -1,7 +1,7 @@
 $('.flash-messages').html("<%= j render 'shared/messages' %>");
 $('#calendar').fullCalendar(
   'renderEvent',
-  $.parseJSON("<%= j render(@event, format: :json).html_safe %>"),
+  $.parseJSON("<%= j render(@simple_event, format: :json).html_safe %>"),
   true
 );
 $('.new-event-modal').modal('hide');

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  let(:event) { create(:event) }
+  let(:event) { create :event }
 
   describe 'associations' do
     # it { should belong_to(:user) }
@@ -10,12 +10,13 @@ RSpec.describe Event, type: :model do
   describe 'scopes' do
     subject { build(:event) }
 
-    let!(:public_event1) { create(:event, visibility: 'public') }
-    let!(:public_event2) { create(:event, visibility: 'public') }
-    let!(:private_event) { create(:event) }
+    let!(:public_event1) { create :event, visibility: 'public' }
+    let!(:public_event2) { create :event, visibility: 'public' }
+    let!(:private_event) { create :event, visibility: 'private' }
 
     context "public_events scope by event: 'public'" do
       subject { Event.public_events.to_a }
+
 
       it { is_expected.to match_array [public_event1, public_event2] }
     end

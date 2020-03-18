@@ -51,21 +51,19 @@ function eventCalendar() {
     select: function(start, end) {
       data = { authenticity_token: $('[name="csrf-token"]')[0].content };
       $('.new-event-modal').modal();
+
+      // 4 SimpleEventForm
       $('#event_date').val(start.format('YYYY-MM-DD'));
-      $('#event_recurring_start_date').val(start.format('YYYY-MM-DD'));
-      $('#event_recurring_end_date').val(end.format('YYYY-MM-DD'));
+      $('#event_duration').val(end.diff(start, 'days'));
+
+      // 4 RecurringEventForm
+      $('#event_start_date').val(start.format('YYYY-MM-DD'));
+      $('#event_end_date').val(end.format('YYYY-MM-DD'));
       cancel_event_button_click_listener();
-      // $.ajax({
-      //   url: '/events/new',
-      //   data: data,
-      //   type: 'GET',
-      //   success: function () {
-      //
-      //   }
-      // });
     },
 
     eventDrop: function(event, delta, revertFunc) {
+
       data = {
         event: {
           id: event.id,
@@ -74,7 +72,7 @@ function eventCalendar() {
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
       $.ajax({
-        url: '/events/' + event.id,
+        url: event.path,
         data: data,
         type: 'PATCH'
       });
@@ -86,7 +84,7 @@ function eventCalendar() {
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
       $.ajax({
-        url: '/events/' + event.id,
+        url: event.path,
         data: data,
         type: 'GET',
         success: function () {
