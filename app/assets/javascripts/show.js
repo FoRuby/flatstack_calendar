@@ -26,7 +26,7 @@ function color_change_listener() {
 };
 
 function title_change_listener() {
-  $('#event_title').on('input', function () {
+  $('.event-title-form input').on('input', function () {
     $(".modal-header h1").text($(this).val());
   });
 };

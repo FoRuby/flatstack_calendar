@@ -12,7 +12,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.integer :duration
 
       # RecurringEvent
-      t.string :schedule
+      t.string :recurrence
       t.date :start_date
       t.date :end_date
 

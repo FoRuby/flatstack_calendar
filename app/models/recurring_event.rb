@@ -1,20 +1,17 @@
 # Наследуется от Event
-# Должно присутствовать поле schedule в котором хранится сериализованное в хеш
+# Должно присутствовать поле recurrence в котором хранится сериализованное в хеш
 #  правило повторений события
 
 class RecurringEvent < Event
-  SCHEDULE = %w[day week month year]
+  serialize :recurrence, Montrose::Recurrence
 
-  validates :schedule, :start_date, :end_date, presence: true
-  validates :schedule, inclusion: { in: SCHEDULE }
+  validates :recurrence, :start_date, :end_date, presence: true
 
   validate :validate_end_date_should_be_greater_then_start_date
 
-  # def dates
-  #   IceCube::Schedule.from_hash(schedule)
-  #                    .occurrences((recurring_end_date + 1).to_time)
-  #                    .map(&:to_date)
-  # end
+  def dates
+    recurrence.map(&:to_date)
+  end
 
   private
 

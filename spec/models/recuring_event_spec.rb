@@ -11,21 +11,15 @@ RSpec.describe RecurringEvent, type: :model do
 
   describe 'validations' do
     let(:recurring_event_with_invalid_date) do
-      build(:recurring_event, start_date: Date.current + 2,
-                              end_date: Date.current + 1)
+      build(:recurring_event, :daily, start_date: Date.current + 2,
+                                      end_date: Date.current + 1)
     end
 
-    subject { build(:recurring_event) }
+    subject { build(:recurring_event, :daily) }
 
-    it { should validate_presence_of :schedule }
+    it { should validate_presence_of :recurrence }
     # it { should validate_presence_of :start_date }
     # it { should validate_presence_of :end_date }
-
-    RecurringEvent::SCHEDULE.each do |value|
-      it { should allow_value(value).for(:schedule) }
-    end
-
-    it { should_not allow_value(1, 'foo', :bar).for(:schedule) }
 
     describe 'custom' do
       context 'validate_end_date_should_be_greater_then_start_date' do
@@ -41,22 +35,31 @@ RSpec.describe RecurringEvent, type: :model do
         end
 
         it 'should raise error' do
-          expect { subject.save! }
-            .to raise_error(ActiveRecord::RecordInvalid)
+          expect { subject.save! }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end
   end
 
   describe 'methods' do
-    # context '#dates' do
-    #   it 'should return dates array' do
-    #     input = recurring_event.dates
-    #     output = ice_cube_schedule
-    #              .occurrences(recurring_event.end_date.to_time)
-    #              .map(&:to_date)
-    #     expect(input).to eq output
-    #   end
-    # end
+    context '#dates' do
+      let(:recurring_event) do
+        build(:recurring_event,
+              :daily,
+              start_date: Date.current,
+              end_date: Date.current + 10)
+      end
+
+      it 'should return dates array' do
+        input = recurring_event.dates
+        output = Montrose.every(
+          :day,
+          starts: recurring_event.start_date,
+          until: recurring_event.end_date
+        ).map(&:to_date)
+
+        expect(input).to eq output
+      end
+    end
   end
 end

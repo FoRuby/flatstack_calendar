@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :recurring_event, class: 'RecurringEvent', parent: :event do
-    schedule { 'day' }
     start_date do
       Faker::Time.between(from: Date.current, to: Date.current + 7)
     end
@@ -13,18 +12,26 @@ FactoryBot.define do
   end
 
   trait :daily do
-    schedule { 'day' }
+    recurrence do
+      Montrose.every(:day, starts: start_date, until: end_date)
+    end
   end
 
   trait :weekly do
-    schedule { 'week' }
+    recurrence do
+      Montrose.every(:week, starts: start_date, until: end_date)
+    end
   end
 
   trait :monthly do
-    schedule { 'month' }
+    recurrence do
+      Montrose.every(:month, starts: start_date, until: end_date)
+    end
   end
 
   trait :yearly do
-    schedule { 'year' }
+    recurrence do
+      Montrose.every(:year, starts: start_date, until: end_date)
+    end
   end
 end

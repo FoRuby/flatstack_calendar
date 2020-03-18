@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_013503) do
     t.string "type", default: "Event", null: false
     t.date "date"
     t.integer "duration"
-    t.string "schedule"
+    t.string "recurrence"
     t.date "start_date"
     t.date "end_date"
     t.datetime "created_at", null: false
