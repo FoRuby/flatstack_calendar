@@ -23,25 +23,13 @@ RSpec.describe Event, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of :title }
-    it { should validate_presence_of :date }
     it { should validate_presence_of :visibility }
     it { should validate_presence_of :color }
-
-
-    it { should validate_numericality_of(:duration).is_greater_than(0) }
 
     it { should allow_value(Faker::Color.hex_color).for(:color) }
     it { should_not allow_value('color', '#11223344', '#12').for(:color) }
 
     it { should allow_value('private', 'public').for(:visibility) }
     it { should_not allow_value(1, 'foo', :bar).for(:visibility) }
-  end
-
-  describe 'methods' do
-    describe '#end_date' do
-      it 'return event end date' do
-        expect(event.end_date).to eq event.date + event.duration
-      end
-    end
   end
 end

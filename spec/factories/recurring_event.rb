@@ -1,46 +1,30 @@
 FactoryBot.define do
   factory :recurring_event, class: 'RecurringEvent', parent: :event do
-    schedule { 'recurring_event_schedule' }
-    recurring_start_date do
-      Faker::Time.between(from: date, to: date - 7.days)
+    schedule { 'day' }
+    start_date do
+      Faker::Time.between(from: Date.current, to: Date.current + 7)
     end
-    recurring_end_date do
+    end_date do
       Faker::Time.between(
-        from: recurring_start_date,
-        to: recurring_start_date + 50.days
+        from: start_date,
+        to: start_date + 50.days
       )
     end
   end
 
   trait :daily do
-    schedule do
-      IceCube::Schedule.new(date) do |schedule|
-        schedule.add_recurrence_rule(IceCube::Rule.daily)
-      end
-    end
+    schedule { 'day' }
   end
 
   trait :weekly do
-    schedule do
-      IceCube::Schedule.new(date) do |schedule|
-        schedule.add_recurrence_rule IceCube::Rule.weekly
-      end
-    end
+    schedule { 'week' }
   end
 
   trait :monthly do
-    schedule do
-      IceCube::Schedule.new(date) do |schedule|
-        schedule.add_recurrence_rule IceCube::Rule.monthly
-      end
-    end
+    schedule { 'month' }
   end
 
   trait :yearly do
-    schedule do
-      IceCube::Schedule.new(date) do |schedule|
-        schedule.add_recurrence_rule IceCube::Rule.yearly
-      end
-    end
+    schedule { 'year' }
   end
 end

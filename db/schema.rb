@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 2020_03_14_013503) do
   create_table "events", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
-    t.date "date", null: false
-    t.integer "duration", null: false
     t.string "visibility", null: false
     t.string "color", null: false
-    t.string "schedule"
-    t.date "recurring_start_date"
-    t.date "recurring_end_date"
     t.string "type", default: "Event", null: false
+    t.date "date"
+    t.integer "duration"
+    t.string "schedule"
+    t.date "start_date"
+    t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -3,10 +3,9 @@ class Event < ApplicationRecord
   EVENT_TYPES = %w[private public]
 
   scope :public_events, -> { where(visibility: 'public') }
-  scope :simple_events, -> { where(type: 'Event') }
+  scope :simple_events, -> { where(type: 'SimpleEvent') }
 
-  validates :title, :date, :duration, :visibility, :color, presence: true
-  validates :duration, numericality: { only_integer: true, greater_than: 0 }
+  validates :title, :visibility, :color, presence: true
   validates :color, format: { with: COLOR_REGEX }
   validates :visibility, inclusion: { in: EVENT_TYPES, message:
     "%{value} should be 'private' or 'public'" }
@@ -15,7 +14,7 @@ class Event < ApplicationRecord
     type == 'RecurringEvent'
   end
 
-  def end_date
-    date + duration
+  def simple_event?
+    type == 'SimpleEvent'
   end
 end
