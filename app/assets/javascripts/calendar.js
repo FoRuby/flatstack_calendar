@@ -1,4 +1,4 @@
-function eventCalendar() {
+var eventCalendar = function() {
   calendar = $('#calendar')
   calendar.fullCalendar({
     header: {
@@ -49,8 +49,7 @@ function eventCalendar() {
     ],
 
     select: function(start, end) {
-      data = { authenticity_token: $('[name="csrf-token"]')[0].content };
-      $('.new-event-modal').modal();
+      $('.new-event-modal').modal('show');
 
       // 4 SimpleEventForm
       $('#event_date').val(start.format('YYYY-MM-DD'));
@@ -59,41 +58,41 @@ function eventCalendar() {
       // 4 RecurringEventForm
       $('#event_start_date').val(start.format('YYYY-MM-DD'));
       $('#event_end_date').val(end.format('YYYY-MM-DD'));
-      cancel_event_button_click_listener();
     },
 
     eventDrop: function(event, delta, revertFunc) {
-
-      data = {
-        event: {
-          id: event.id,
-          date: event.start.format(),
-        },
-        authenticity_token: $('[name="csrf-token"]')[0].content
-      };
-      $.ajax({
+      data = { event: { id: event.id, format: 'js' } };
+      Rails.ajax({
         url: event.path,
+        type: 'delete',
         data: data,
-        type: 'PATCH'
+        success: function(data) {},
+        error: function(data) {}
       });
     },
 
+    dayClick: function(start) {
+      $('.new-event-modal').modal();
+      // 4 SimpleEventForm
+      $('#event_date').val(start.format('YYYY-MM-DD'));
+      $('#event_duration').val('1');
+    },
+
     eventClick: function(event, jsEvent, view) {
-      data = {
-        event: { id: event.id, format: 'js' },
-        authenticity_token: $('[name="csrf-token"]')[0].content
-      };
-      $.ajax({
+      $('.foobar').append('<p>Hello</p>')
+      data = { event: { id: event.id, format: 'js' } };
+      Rails.ajax({
         url: event.path,
+        type: 'get',
         data: data,
-        type: 'GET',
-        success: function () {
+        success: function(data) {
           edit_event_button_click_listener();
           show_event_color();
           cancel_event_button_click_listener();
           color_change_listener();
           title_change_listener();
-        }
+        },
+        error: function(data) {}
       });
     }
   })

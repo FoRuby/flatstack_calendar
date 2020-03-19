@@ -1,7 +1,3 @@
-require 'spec_helper'
-require 'capybara/rspec'
-require 'selenium/webdriver'
-
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
@@ -10,7 +6,11 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+
 require 'rspec/rails'
+require 'spec_helper'
+require 'capybara/rspec'
+require 'webdrivers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -49,21 +49,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  # Capybara.javascript_driver = :selenium_headless
-
-  # RSpec Rails can automatically mix in different behaviours to your tests
-  # based on their file location, for example enabling you to call `get` and
-  # `post` in specs under `spec/controllers`.
-  #
-  # You can disable this behaviour by removing the line below, and instead
-  # explicitly tag your specs with their type, e.g.:
-  #
-  #     RSpec.describe UsersController, :type => :controller do
-  #       # ...
-  #     end
-  #
-  # The different available types are documented in the features, such as in
-  # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
@@ -78,40 +63,3 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-
-# Capybara.register_driver :firefox do |app|
-#   Capybara::Selenium::Driver.new(app, browser: :firefox)
-# end
-#
-# Capybara.register_driver :headless_firefox do |app|
-#   options = Selenium::WebDriver::Firefox::Options.new
-#   options.headless! # added on https://github.com/SeleniumHQ/selenium/pull/4762
-#
-#   Capybara::Selenium::Driver.new app,
-#     browser: :firefox,
-#     options: options
-# end
-#
-# Capybara.javascript_driver = :headless_firefox
-
-
-Capybara.register_driver :selenium_chrome_headless do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: {
-      args: %w[
-        headless
-        enable-features=NetworkService
-        NetworkServiceInProcess
-      ]
-    }
-  )
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    desired_capabilities: capabilities
-  )
-end
-
-Capybara.default_driver = :selenium_chrome_headless
-Capybara.javascript_driver = :selenium_chrome_headless

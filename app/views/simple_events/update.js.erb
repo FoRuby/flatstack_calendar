@@ -1,3 +1,5 @@
+$('.edit-event-errors')
+  .html("<%= j render 'shared/errors', resource: @simple_event %>");
 <% if @simple_event.errors.blank? %>
   $('.flash-messages').html("<%= j render 'shared/messages' %>");
   $('#calendar').fullCalendar('removeEvents', [<%= @simple_event.id %>]);

@@ -1,11 +1,7 @@
-// function button_click() {
-//   $('.cancel-button').click(function(event) {
-//    event.preventDefault();
-//   });
-//
-//   $('.cancel-button').on('click', function (e) {
-//     console.log('buttonclick');
-//   })
-// };
-//
-// $(document).on('turbolinks:load', button_click);
+function close_card() {
+  $('.close-icon').on('click',function() {
+    $(this).closest('.card').fadeOut();
+  })
+};
+
+$(document).on('turbolinks:load', close_card);

@@ -3,9 +3,9 @@
     .modal-content
       .modal-header
         .modal-title Create New Event
-        button.close *{type: 'button',
-                       data: {dismiss: 'modal'},
-                       aria: {label: 'Close'}}
+        button.close.cancel-event-button *{type: 'button',
+                                           data: {dismiss: 'modal'},
+                                           aria: {label: 'Close'}}
           span *{aria: {hidden: 'true'}} &times;
 
       .container
@@ -27,6 +27,8 @@
                   aria-controls='nav-recurring_event'
                   aria-selected='false'
                 ] Profile
+
+            .new-event-errors
 
             .tab-content#nav-tabContent
               .tab-pane.fade.show.active#nav-simple-event[

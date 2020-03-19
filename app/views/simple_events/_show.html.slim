@@ -8,6 +8,8 @@
       .modal-header
         h1 = @simple_event.title
 
+      .edit-event-errors
+
       .edit-form.hidden
         = render 'simple_event_form', event: @simple_event,
                                       url: simple_event_path(@simple_event),

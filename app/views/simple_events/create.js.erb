@@ -1,7 +1,11 @@
-$('.flash-messages').html("<%= j render 'shared/messages' %>");
-$('#calendar').fullCalendar(
-  'renderEvent',
-  $.parseJSON("<%= j render(@simple_event, format: :json).html_safe %>"),
-  true
-);
-$('.new-event-modal').modal('hide');
+$('.new-event-errors')
+  .html("<%= j render 'shared/errors', resource: @simple_event %>");
+<% if @simple_event.errors.blank? %>
+  $('.flash-messages').html("<%= j render 'shared/messages' %>");
+  $('#calendar').fullCalendar(
+    'renderEvent',
+    $.parseJSON("<%= j render(@simple_event, format: :json).html_safe %>"),
+    true
+  );
+  $('.new-event-modal').modal('hide');
+<% end %>

@@ -1,0 +1,6 @@
+- if resource.present? && resource.errors.present?
+  .card
+    b.card-header.bg-danger = "#{resource.errors.count} error(s) detected: "
+    ul.list-group.list-group-flush
+        -resource.errors.full_messages.each do |message|
+          li.list-group-item = message

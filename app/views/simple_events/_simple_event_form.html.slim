@@ -8,8 +8,7 @@
     .form-group.event-title-form
       = f.label :title
       = f.text_field :title, class: 'form-control',
-                             placeholder: 'Enter event title',
-                             required: true
+                             placeholder: 'Enter event title'
 
     .form-group
       = f.label :description
@@ -28,13 +27,11 @@
     .row
       .col.form-group
         = f.label :date
-        = f.date_field :date, class: 'form-control', required: true
+        = f.date_field :date, class: 'form-control'
 
       .col.form-group
         = f.label :duration
-        = f.number_field :duration, class: 'form-control',
-                                    min: 1,
-                                    required: true
+        = f.number_field :duration, class: 'form-control'
 
 
   .modal-footer

@@ -5,5 +5,5 @@
 //= require popper
 //= require bootstrap
 //= require moment
-//= require fullcalendar
+// = require fullcalendar
 //= require_tree .
