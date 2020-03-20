@@ -17,7 +17,6 @@ RSpec.describe Event, type: :model do
     context "public_events scope by event: 'public'" do
       subject { Event.public_events.to_a }
 
-
       it { is_expected.to match_array [public_event1, public_event2] }
     end
   end

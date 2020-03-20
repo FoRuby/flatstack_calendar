@@ -17,6 +17,11 @@ FactoryBot.define do
     end
   end
 
+  trait :invalid_recurring_event do
+    start_date { nil }
+    end_date { nil }
+  end
+
   trait :weekly do
     recurrence do
       Montrose.every(:week, starts: start_date, until: end_date)

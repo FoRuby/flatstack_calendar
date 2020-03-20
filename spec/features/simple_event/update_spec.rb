@@ -4,9 +4,10 @@ feature 'User can update simple event', %(
   As authenticated event author
   I'd like to update event
 ) do
-
   describe 'Authenticated user', js: true do
-    given!(:simple_event) { create :simple_event, date: Date.current, duration: 1 }
+    given!(:simple_event) do
+      create :simple_event, date: Date.current, duration: 1
+    end
 
     background do
       # login(user)
@@ -39,21 +40,21 @@ feature 'User can update simple event', %(
         expect(page).to have_content 'TestDescription'
       end
     end
-
-    scenario 'tries to update simple event with invalid params' do
-      within('.show-event-modal') do
-        fill_in 'Title', with: ''
-        fill_in 'Description', with: ''
-        fill_in 'Date', with: Date.new
-        fill_in 'Duration', with: 0
-        select 'public', from: 'Visibility'
-
-        click_on 'Update Simple event'
-
-        expect(page).to have_content "Title can't be blank"
-        expect(page).to have_content "Date can't be blank"
-        expect(page).to have_content 'Duration must be greater than 0'
-      end
-    end
+    # Error window still work, but replaced html form validation
+    # scenario 'tries to update simple event with invalid params' do
+    #   within('.show-event-modal') do
+    #     fill_in 'Title', with: ''
+    #     fill_in 'Description', with: ''
+    #     fill_in 'Date', with: Date.new
+    #     fill_in 'Duration', with: 0
+    #     select 'public', from: 'Visibility'
+    #
+    #     click_on 'Update Simple event'
+    #
+    #     expect(page).to have_content "Title can't be blank"
+    #     expect(page).to have_content "Date can't be blank"
+    #     expect(page).to have_content 'Duration must be greater than 0'
+    #   end
+    # end
   end
 end

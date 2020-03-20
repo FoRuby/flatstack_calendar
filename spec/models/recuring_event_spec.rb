@@ -17,9 +17,8 @@ RSpec.describe RecurringEvent, type: :model do
 
     subject { build :recurring_event, :daily }
 
-    it { should validate_presence_of :recurrence }
-    # it { should validate_presence_of :start_date }
-    # it { should validate_presence_of :end_date }
+    it { should validate_presence_of :start_date }
+    it { should validate_presence_of :end_date }
 
     describe 'custom' do
       context 'validate_end_date_should_be_greater_then_start_date' do

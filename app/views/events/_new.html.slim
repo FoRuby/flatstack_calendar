@@ -1,4 +1,4 @@
-.modal.fade.new-event-modal role="dialog" aria-hidden="true"
+.modal.fade.new-event-modal role='dialog' aria-hidden='true'
   .modal-dialog role="document"
     .modal-content
       .modal-header
@@ -19,14 +19,15 @@
                   role='tab'
                   aria-controls='nav-simple-event'
                   aria-selected='true'
-                ] Home
+                ] Simple Event
+
                 a.nav-item.nav-link#nav-recurring_event-tab[
                   data-toggle='tab'
                   href='#nav-recurring_event'
                   role='tab'
                   aria-controls='nav-recurring_event'
                   aria-selected='false'
-                ] Profile
+                ] Recurring Event
 
             .new-event-errors
 
@@ -36,12 +37,15 @@
                 aria-labelledby='nav-simple-event-tab']
 
                 = render 'simple_events/simple_event_form',
-                  event: @simple_event, url: simple_events_path, method: :post
+                  simple_event: @simple_event,
+                  url: simple_events_path,
+                  method: :post
 
+              .tab-pane.fade#nav-recurring_event[
+                role='tabpanel'
+                aria-labelledby='nav-recurring_event-tab']
 
-              / .tab-pane.fade#nav-recurring_event[
-              /   role='tabpanel'
-              /   aria-labelledby='nav-recurring_event-tab']
-              /
-              /   = render 'recurring_events/recurring_event_form',
-              /     event: @recurring_event, url: recurring_events_path, method: :post
+                = render 'recurring_events/recurring_event_form',
+                  recurring_event: @recurring_event,
+                  url: recurring_events_path,
+                  method: :post

@@ -13,9 +13,10 @@ function cancel_event_button_click_listener() {
 };
 
 function clear_form() {
-  $('#event_title').val('');
-  $('#event_description').val('');
-  $('#event_color').val('#000000');
+  console.log('clear');
+  $('.event-title input').val('');
+  $('.event-description textarea').val('');
+  $('.event-color input').val('#000000');
   $('.modal-header').css('background-color', '#ffffff');
 
 }
@@ -36,8 +37,7 @@ function color_change_listener() {
 };
 
 function title_change_listener() {
-  $('.event-title-form input').on('input', function () {
-    // text = $(this).val();
+  $('.event-title input').on('input', function () {
     $(".modal-header h1").text($(this).val());
   });
 };
@@ -47,13 +47,3 @@ $(document).on('turbolinks:load', cancel_event_button_click_listener);
 $(document).on('turbolinks:load', edit_event_button_click_listener);
 $(document).on('turbolinks:load', color_change_listener);
 $(document).on('turbolinks:load', title_change_listener);
-
-function test() {
-  $('.test').on('click', function(e) {
-    e.preventDefault();
-    // $('.new-event-modal').modal('toggle');
-    $('.flash-messages').append( "<strong>Hello</strong>" );
-  })
-};
-
-$(document).on('turbolinks:load', test);

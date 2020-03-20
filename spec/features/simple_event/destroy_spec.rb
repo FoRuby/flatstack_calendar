@@ -4,9 +4,10 @@ feature 'User can destroy simple event', %(
   As authenticated event author
   I'd like to destroy event
 ) do
-
   describe 'Authenticated user', js: true do
-    given!(:simple_event) { create :simple_event, date: Date.current, duration: 1 }
+    given!(:simple_event) do
+      create :simple_event, date: Date.current, duration: 1
+    end
 
     background do
       # login(user)
@@ -14,7 +15,7 @@ feature 'User can destroy simple event', %(
       find("#event-#{simple_event.id}").click
     end
 
-    scenario 'tries to update simple event with correct params' do
+    scenario 'tries to destroy simple event' do
       within('#calendar') do
         expect(page).to have_content simple_event.title.to_s
       end

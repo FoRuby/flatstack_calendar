@@ -1,0 +1,3 @@
+$('.show-event-modal').modal('hide');
+$('#calendar').fullCalendar('removeEvents', [<%= @recurring_event.id %>]);
+$('.flash-messages').html("<%= j render 'shared/messages' %>");

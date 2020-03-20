@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 feature 'interactive changing event title', js: true do
-  given!(:simple_event) { create :simple_event, date: Date.current, duration: 1 }
+  given!(:simple_event) do
+    create :simple_event, date: Date.current, duration: 1
+  end
 
   background do
     visit root_path

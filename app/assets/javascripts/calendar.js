@@ -61,11 +61,20 @@ var eventCalendar = function() {
     },
 
     eventDrop: function(event, delta, revertFunc) {
-      data = { event: { id: event.id, format: 'js' } };
-      Rails.ajax({
+      data = {
+        event: {
+          id: event.id,
+          date: event.start.format(),
+          start_date: event.start.format(),
+          end_date: event.end.format()
+        },
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      };
+
+      $.ajax({
+        type: 'patch',
         url: event.path,
-        type: 'delete',
-        data: data,
+        data:  data,
         success: function(data) {},
         error: function(data) {}
       });
@@ -79,11 +88,17 @@ var eventCalendar = function() {
     },
 
     eventClick: function(event, jsEvent, view) {
-      $('.foobar').append('<p>Hello</p>')
-      data = { event: { id: event.id, format: 'js' } };
-      Rails.ajax({
+      data = {
+        event: {
+          id: event.id,
+          start_date: event.start.format(),
+          format: 'js'
+        }
+      };
+      $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
         url: event.path,
-        type: 'get',
         data: data,
         success: function(data) {
           edit_event_button_click_listener();

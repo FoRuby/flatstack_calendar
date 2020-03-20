@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe EventHelper do
   let(:simple_event) { create :simple_event, date: Date.current, duration: 5 }
+
   describe '#format' do
     context 'start_end' do
       it 'return string sample 17 March 2020 — 22 March 2020' do
