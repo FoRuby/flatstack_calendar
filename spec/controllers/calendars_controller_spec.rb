@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CalendarController, type: :controller do
+RSpec.describe CalendarsController, type: :controller do
   let(:simple_event) { create :simple_event }
   let(:recurring_event) { create :recurring_event }
 

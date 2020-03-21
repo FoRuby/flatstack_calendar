@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  root 'calendar#calendar'
+  root 'calendars#calendar'
 
-  get 'calendar/simple_events'
-  get 'calendar/recurring_events'
+  resource :calendar do
+    member do
+      get 'simple_events'
+      get 'recurring_events'
+      get 'my_simple_events'
+      get 'my_recurring_events'
+      get 'calendar'
+    end
+  end
 
   resources :recurring_events
   resources :simple_events

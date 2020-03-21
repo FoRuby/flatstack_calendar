@@ -4,20 +4,57 @@ var eventCalendar = function() {
     header: {
       left: 'prev, next, today',
       center: 'title',
-      right: 'month'
-      // right: 'month, listMonth, timeGridFourDay'
+      right: 'month_public, month_private'
     },
 
-    // views: {
-    //   timeGridFourDay: {
-    //     type: 'listMonth',
-    //     duration: { days: 4 },
-    //     buttonText: '4 day',
-    //     selectable: true,
-    //     editable: true,
-    //     eventLimit: true
-    //   }
-    // },
+    views: {
+      month_public: {
+        type: 'month',
+        buttonText: 'Public Events'
+      },
+      month_private: {
+        type: 'month',
+        buttonText: 'My Events',
+      }
+    },
+
+    viewRender: function(view) {
+      // костыль с куками
+      previous_view = localStorage.getItem('previous_view') || view.name
+      localStorage.setItem('previous_view', previous_view);
+
+      public_source = ['/calendar/simple_events.json', '/calendar/simple_events.json']
+      private_source = ['/calendar/my_recurring_events.json', '/calendar/recurring_events.json']
+
+      // My Events => Public Events
+      if(view.name == 'month_private' && localStorage.getItem('previous_view') !== 'month_private') {
+        calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/my_recurring_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/my_simple_events.json');
+       };
+
+       // Public Events => My Events
+      if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
+        calendar.fullCalendar('removeEventSource', '/calendar/my_recurring_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/my_simple_events.json');
+
+        calendar.fullCalendar('addEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/recurring_events.json');
+       };
+
+       localStorage.setItem('previous_view', view.name);
+    },
+
+    selectable: true,
+    selectHelper: true,
+    editable: true,
+    eventLimit: true,
+    defaultView: 'month_public',
+    eventSources: [
+      '/calendar/simple_events.json',
+      '/calendar/recurring_events.json',
+    ],
 
     eventRender: function(eventObj, $el) {
       $el.popover({
@@ -38,15 +75,6 @@ var eventCalendar = function() {
       element.attr('id', 'event-' + event.id);
       flash_handler();
     },
-
-    selectable: true,
-    selectHelper: true,
-    editable: true,
-    eventLimit: true,
-    eventSources: [
-      '/calendar/simple_events.json',
-      '/calendar/recurring_events.json'
-    ],
 
     select: function(start, end) {
       $('.new-event-modal').modal('show');

@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   scope :public_events, -> { where(visibility: 'public') }
+  scope :private_events, -> { where(visibility: 'private') }
   scope :simple_events, -> { where(type: 'SimpleEvent') }
   scope :recurring_events, -> { where(type: 'RecurringEvent') }
 
