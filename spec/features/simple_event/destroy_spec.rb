@@ -11,7 +11,7 @@ feature 'User can destroy simple event', %(
 
     background do
       # login(user)
-      visit root_path
+      visit calendar_path
       find("#event-#{simple_event.id}").click
     end
 

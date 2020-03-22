@@ -6,7 +6,7 @@ feature 'interactive changing event header color', js: true do
   end
 
   background do
-    visit root_path
+    visit calendar_path
     find("#event-#{simple_event.id}").click
     click_on 'Edit event'
   end

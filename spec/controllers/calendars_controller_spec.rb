@@ -4,8 +4,8 @@ RSpec.describe CalendarsController, type: :controller do
   let(:simple_event) { create :simple_event }
   let(:recurring_event) { create :recurring_event }
 
-  describe 'GET #calendar' do
-    before { get :calendar }
+  describe 'GET #show' do
+    before { get :show }
 
     it 'assign new simple event' do
       expect(assigns(:simple_event)).to be_a_new(SimpleEvent)
@@ -15,8 +15,8 @@ RSpec.describe CalendarsController, type: :controller do
       expect(assigns(:recurring_event)).to be_a_new(RecurringEvent)
     end
 
-    it 'render calendar view' do
-      expect(response).to render_template :calendar
+    it 'render show view' do
+      expect(response).to render_template :show
     end
 
     it 'respond with html format' do

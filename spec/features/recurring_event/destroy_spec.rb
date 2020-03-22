@@ -12,7 +12,7 @@ feature 'User can destroy recurring event', %(
 
     background do
       # login(user)
-      visit root_path
+      visit calendar_path
       first("#event-#{recurring_event.id}").click
     end
 

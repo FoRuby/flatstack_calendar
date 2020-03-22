@@ -7,7 +7,7 @@ feature 'User can create recurring event', %(
   describe 'Authenticated user', js: true do
     background do
       # login(user)
-      visit root_path
+      visit calendar_path
     end
 
     scenario 'tries to create recurring event with correct params' do

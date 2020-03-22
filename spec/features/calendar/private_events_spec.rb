@@ -15,7 +15,7 @@ feature 'User can create private events', %(
 
     background do
       # login(user)
-      visit root_path
+      visit calendar_path
     end
 
     scenario "sees his private event on 'My Events' tab" do
