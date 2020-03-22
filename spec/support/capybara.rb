@@ -1,8 +1,3 @@
-Capybara.add_selector(:dt) do
-  css { |v| "[data-date=\'#{v}\']" }
-end
-
-
 # Capybara.register_driver :selenium_chrome_headless do |app|
 #   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
 #     chromeOptions: {

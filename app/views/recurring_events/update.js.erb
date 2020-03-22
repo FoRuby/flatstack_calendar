@@ -5,7 +5,7 @@ $('.edit-event-errors')
   $('#calendar').fullCalendar('removeEvents', [<%= @recurring_event.id %>]);
   $('#calendar').fullCalendar(
     'renderEvents',
-    $.parseJSON("<%= j raw(render(@recurring_event, format: :json)) %>"),
+    $.parseJSON("<%= j raw(RecurringEventHelper.to_json(@recurring_event)) %>"),
     true
   );
   $('.show-event-modal').modal('hide');

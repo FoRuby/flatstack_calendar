@@ -4,7 +4,7 @@ $('.new-event-errors')
   $('.flash-messages').html("<%= j render 'shared/messages' %>");
   $('#calendar').fullCalendar(
     'renderEvents',
-    $.parseJSON("<%= j render(@recurring_event, format: :json).html_safe %>"),
+    $.parseJSON("<%= j raw(RecurringEventHelper.to_json(@recurring_event)) %>"),
     true
   );
   $('.new-event-modal').modal('hide');

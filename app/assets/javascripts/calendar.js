@@ -23,18 +23,15 @@ var eventCalendar = function() {
       previous_view = localStorage.getItem('previous_view') || view.name
       localStorage.setItem('previous_view', previous_view);
 
-      public_source = ['/calendar/simple_events.json', '/calendar/simple_events.json']
-      private_source = ['/calendar/my_recurring_events.json', '/calendar/recurring_events.json']
-
-      // My Events => Public Events
+      // Public Events => My Events
       if(view.name == 'month_private' && localStorage.getItem('previous_view') !== 'month_private') {
         calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
-        calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/recurring_events.json');
         calendar.fullCalendar('addEventSource', '/calendar/my_recurring_events.json');
         calendar.fullCalendar('addEventSource', '/calendar/my_simple_events.json');
        };
 
-       // Public Events => My Events
+       // My Events => Public Events
       if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
         calendar.fullCalendar('removeEventSource', '/calendar/my_recurring_events.json');
         calendar.fullCalendar('removeEventSource', '/calendar/my_simple_events.json');
@@ -89,23 +86,26 @@ var eventCalendar = function() {
     },
 
     eventDrop: function(event, delta, revertFunc) {
-      data = {
-        event: {
-          id: event.id,
-          date: event.start.format(),
-          start_date: event.start.format(),
-          end_date: event.end.format()
-        },
-        authenticity_token: $('[name="csrf-token"]')[0].content
-      };
+      // TODO: придумать как обробатывать RecurringEvent
+      if (event.type == 'SimpleEvent') {
+        data = {
+          event: {
+            id: event.id,
+            date: event.start.format(),
+            start_date: event.start.format(),
+            end_date: event.end.format()
+          },
+          authenticity_token: $('[name="csrf-token"]')[0].content
+        };
 
-      $.ajax({
-        type: 'patch',
-        url: event.path,
-        data:  data,
-        success: function(data) {},
-        error: function(data) {}
-      });
+        $.ajax({
+          type: 'patch',
+          url: event.path,
+          data:  data,
+          success: function(data) {},
+          error: function(data) {}
+        });
+      };
     },
 
     dayClick: function(start) {

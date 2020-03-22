@@ -29,16 +29,12 @@ RSpec.describe CalendarsController, type: :controller do
   end
 
   describe 'GET #simple_events' do
-    let(:simple_event) { create_list :simple_event, 2, visibility: 'public' }
+    let!(:simple_events) { create_list :simple_event, 2, visibility: 'public' }
 
     before { get :simple_events, format: :json }
 
     it 'show an array of all public simple events' do
-      expect(assigns(:simple_events)).to match_array simple_event
-    end
-
-    it 'render simple_events view' do
-      expect(response).to render_template :simple_events
+      expect(assigns(:simple_events)).to match_array simple_events
     end
 
     it 'respond with json format' do
@@ -51,18 +47,15 @@ RSpec.describe CalendarsController, type: :controller do
   end
 
   describe 'GET #recurring_events' do
-    let(:recurring_events) do
+    let!(:recurring_events) do
       create_list :recurring_event, 2, :daily, visibility: 'public'
     end
 
     before { get :recurring_events, format: :json }
 
     it 'show an array of public recurring_events' do
-      expect(assigns(:recurring_events)).to match_array recurring_events
-    end
-
-    it 'render recurring_events view' do
-      expect(response).to render_template :recurring_events
+      expect(assigns(:recurring_events))
+        .to match_array recurring_events.map(&:events).flatten
     end
 
     it 'respond with json format' do

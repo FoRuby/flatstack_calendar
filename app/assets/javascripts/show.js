@@ -13,7 +13,6 @@ function cancel_event_button_click_listener() {
 };
 
 function clear_form() {
-  console.log('clear');
   $('.event-title input').val('');
   $('.event-description textarea').val('');
   $('.event-color input').val('#000000');

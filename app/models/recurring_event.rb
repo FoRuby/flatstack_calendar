@@ -23,6 +23,19 @@ class RecurringEvent < Event
     dates[dates.find_index(day.to_date) + 1]
   end
 
+  def events
+    collection = []
+
+    dates.each do |start_date|
+      event = RecurringEvent.new attributes
+      event.start_date = start_date
+      event.end_date = start_date + 1
+      collection << event
+    end
+
+    collection
+  end
+
   private
 
   def set_recurrence

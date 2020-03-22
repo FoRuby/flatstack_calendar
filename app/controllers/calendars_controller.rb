@@ -6,21 +6,25 @@ class CalendarsController < ApplicationController
 
   def simple_events
     @simple_events = SimpleEvent.public_events.all
+
+    render json: @simple_events, adapter: :attributes
   end
 
   def recurring_events
-    @recurring_events = RecurringEvent.public_events.all
+    @recurring_events = RecurringEvent.public_events.all.map(&:events).flatten
+
+    render json: @recurring_events, adapter: :attributes
   end
 
   def my_simple_events
     @simple_events = SimpleEvent.private_events.all
 
-    render :simple_events
+    render json: @simple_events, adapter: :attributes
   end
 
   def my_recurring_events
-    @recurring_events = RecurringEvent.private_events.all
+    @recurring_events = RecurringEvent.private_events.all.map(&:events).flatten
 
-    render :recurring_events
+    render json: @recurring_events, adapter: :attributes
   end
 end

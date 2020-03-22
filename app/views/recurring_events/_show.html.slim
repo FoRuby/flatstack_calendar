@@ -1,5 +1,5 @@
 .modal.fade.show-event-modal[
-  id = "simple-event-#{@recurring_event.id}"
+  id = "recurring-event-#{@recurring_event.id}"
   role='dialog'
   aria-hidden='true']
 
@@ -11,9 +11,10 @@
       .edit-event-errors
 
       .edit-form.hidden
-        = render 'recurring_event_form', event: @recurring_event,
-                                      url: recurring_event_path(@recurring_event),
-                                      method: 'patch'
+        = render 'recurring_event_form',
+          event: @recurring_event,
+          url: recurring_event_path(@recurring_event),
+          method: 'patch'
 
       .show-form
         .modal-body

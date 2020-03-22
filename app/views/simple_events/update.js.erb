@@ -5,7 +5,7 @@ $('.edit-event-errors')
   $('#calendar').fullCalendar('removeEvents', [<%= @simple_event.id %>]);
   $('#calendar').fullCalendar(
     'renderEvent',
-    $.parseJSON("<%= j raw(render(@simple_event, format: :json)) %>"),
+    $.parseJSON("<%= j raw(SimpleEventSerializer.new(@simple_event).to_json) %>"),
     true
   );
   $('.show-event-modal').modal('hide');

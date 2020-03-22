@@ -12,12 +12,19 @@ RSpec.describe Event, type: :model do
 
     let!(:public_event1) { create :event, visibility: 'public' }
     let!(:public_event2) { create :event, visibility: 'public' }
-    let!(:private_event) { create :event, visibility: 'private' }
+    let!(:private_event1) { create :event, visibility: 'private' }
+    let!(:private_event2) { create :event, visibility: 'private' }
 
-    context "public_events scope by event: 'public'" do
+    context "events scope by event: 'public'" do
       subject { Event.public_events.to_a }
 
       it { is_expected.to match_array [public_event1, public_event2] }
+    end
+
+    context "events scope by event: 'private'" do
+      subject { Event.private_events.to_a }
+
+      it { is_expected.to match_array [private_event1, private_event2] }
     end
   end
 

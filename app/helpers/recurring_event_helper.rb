@@ -7,6 +7,15 @@ module RecurringEventHelper
     Montrose.every(schedule_type.to_sym)
   end
 
+  def self.to_json(recurring_event)
+    ActiveModel::Serializer::CollectionSerializer
+      .new(
+        recurring_event.events,
+        each_serializer: RecurringEventSerializer,
+        root: false
+      ).to_json
+  end
+
   def next_date(next_date)
     return 'not determined' if next_date.nil?
 
