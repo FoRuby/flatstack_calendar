@@ -1,0 +1,11 @@
+$('.new-event-errors')
+  .html("<%= j render 'shared/errors', resource: @recurring_event %>");
+<% if @recurring_event.errors.blank? %>
+  $('.flash-messages').html("<%= j render 'shared/messages' %>");
+  $('#calendar').fullCalendar(
+    'renderEvents',
+    $.parseJSON("<%= j raw(RecurringEventHelper.to_json(@recurring_event)) %>"),
+    true
+  );
+  $('.new-event-modal').modal('hide');
+<% end %>

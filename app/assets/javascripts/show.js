@@ -1,14 +1,24 @@
 function show_event_color() {
     color = $('.color').html();
-    $('.modal-header').css('background-color', color);
+    $('.show-event-modal .modal-header').css('background-color', color);
 };
 
 function cancel_event_button_click_listener() {
   $('.cancel-event-button').on('click', function (e) {
     e.preventDefault();
+    $('.card').remove();
+    clear_form();
     $('.modal').modal('hide');
   })
 };
+
+function clear_form() {
+  $('.event-title input').val('');
+  $('.event-description textarea').val('');
+  $('.event-color input').val('#000000');
+  $('.modal-header').css('background-color', '#ffffff');
+
+}
 
 function edit_event_button_click_listener() {
   $('.edit-event-button').on('click', function(e) {
@@ -19,14 +29,14 @@ function edit_event_button_click_listener() {
 };
 
 function color_change_listener() {
-  $('#event_color').change(function(e) {
-    color = $('#event_color').val();
-    $('.modal-header').css('background-color', color);
+  $('.color-input').on('change', function() {
+    color = $(this).val();
+    $('.show-event-modal .modal-header').css('background-color', color);
   });
 };
 
 function title_change_listener() {
-  $('#event_title').on('input', function () {
+  $('.event-title input').on('input', function () {
     $(".modal-header h1").text($(this).val());
   });
 };

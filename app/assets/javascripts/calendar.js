@@ -1,23 +1,57 @@
-function eventCalendar() {
+var eventCalendar = function() {
   calendar = $('#calendar')
   calendar.fullCalendar({
     header: {
       left: 'prev, next, today',
       center: 'title',
-      right: 'month'
-      // right: 'month, listMonth, timeGridFourDay'
+      right: 'month_public, month_private'
     },
 
-    // views: {
-    //   timeGridFourDay: {
-    //     type: 'listMonth',
-    //     duration: { days: 4 },
-    //     buttonText: '4 day',
-    //     selectable: true,
-    //     editable: true,
-    //     eventLimit: true
-    //   }
-    // },
+    views: {
+      month_public: {
+        type: 'month',
+        buttonText: 'Public Events'
+      },
+      month_private: {
+        type: 'month',
+        buttonText: 'My Events',
+      }
+    },
+
+    viewRender: function(view) {
+      // костыль с куками
+      previous_view = localStorage.getItem('previous_view') || view.name
+      localStorage.setItem('previous_view', previous_view);
+
+      // Public Events => My Events
+      if(view.name == 'month_private' && localStorage.getItem('previous_view') !== 'month_private') {
+        calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/recurring_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/my_recurring_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/my_simple_events.json');
+       };
+
+       // My Events => Public Events
+      if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
+        calendar.fullCalendar('removeEventSource', '/calendar/my_recurring_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/my_simple_events.json');
+
+        calendar.fullCalendar('addEventSource', '/calendar/simple_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/recurring_events.json');
+       };
+
+       localStorage.setItem('previous_view', view.name);
+    },
+
+    selectable: true,
+    selectHelper: true,
+    editable: true,
+    eventLimit: true,
+    defaultView: 'month_public',
+    eventSources: [
+      '/calendar/simple_events.json',
+      '/calendar/recurring_events.json',
+    ],
 
     eventRender: function(eventObj, $el) {
       $el.popover({
@@ -39,62 +73,69 @@ function eventCalendar() {
       flash_handler();
     },
 
-    selectable: true,
-    selectHelper: true,
-    editable: true,
-    eventLimit: true,
-    events: '/events.json',
-
     select: function(start, end) {
-      data = { authenticity_token: $('[name="csrf-token"]')[0].content };
-      $.ajax({
-        url: '/events/new',
-        data: data,
-        type: 'GET',
-        success: function () {
-          $('#event_start_date').val(start.format('YYYY-MM-DD'));
-          $('#event_end_date').val(end.format('YYYY-MM-DD'));
-          cancel_event_button_click_listener();
-        }
-      });
+      $('.new-event-modal').modal('show');
+
+      // 4 SimpleEventForm
+      $('#event_date').val(start.format('YYYY-MM-DD'));
+      $('#event_duration').val(end.diff(start, 'days'));
+
+      // 4 RecurringEventForm
+      $('#event_start_date').val(start.format('YYYY-MM-DD'));
+      $('#event_end_date').val(end.format('YYYY-MM-DD'));
     },
 
     eventDrop: function(event, delta, revertFunc) {
-      data = {
-        event: {
-          id: event.id,
-          start_date: event.start.format(),
-          end_date: function() {
-            if (event.end !== null){
-              return event.end.format()
-            }
-          }
-        },
-        authenticity_token: $('[name="csrf-token"]')[0].content
+      // TODO: придумать как обробатывать RecurringEvent
+      if (event.type == 'SimpleEvent') {
+        data = {
+          event: {
+            id: event.id,
+            date: event.start.format(),
+            start_date: event.start.format(),
+            end_date: event.end.format()
+          },
+          authenticity_token: $('[name="csrf-token"]')[0].content
+        };
+
+        $.ajax({
+          type: 'patch',
+          url: event.path,
+          data:  data,
+          success: function(data) {},
+          error: function(data) {}
+        });
       };
-      $.ajax({
-        url: '/events/' + event.id,
-        data: data,
-        type: 'PATCH'
-      });
+    },
+
+    dayClick: function(start) {
+      $('.new-event-modal').modal();
+      // 4 SimpleEventForm
+      $('#event_date').val(start.format('YYYY-MM-DD'));
+      $('#event_duration').val('1');
     },
 
     eventClick: function(event, jsEvent, view) {
       data = {
-        event: { id: event.id, format: 'js' },
-        authenticity_token: $('[name="csrf-token"]')[0].content
+        event: {
+          id: event.id,
+          start_date: event.start.format(),
+          format: 'js'
+        }
       };
       $.ajax({
-        url: '/events/' + event.id,
-        data: data,
         type: 'GET',
-        success: function () {
+        contentType: 'application/json',
+        url: event.path,
+        data: data,
+        success: function(data) {
           edit_event_button_click_listener();
           show_event_color();
           cancel_event_button_click_listener();
           color_change_listener();
           title_change_listener();
-        }
+        },
+        error: function(data) {}
       });
     }
   })

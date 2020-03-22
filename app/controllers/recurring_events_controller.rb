@@ -1,45 +1,40 @@
-class EventsController < ApplicationController
+class RecurringEventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
 
-  def index
-    @events = Event.all
-  end
-
   def show
-  end
-
-  def new
-    @event = Event.new
+    @next_date =
+      @recurring_event.next_date(recurring_event_params[:start_date])
   end
 
   def create
-    @event = Event.new(event_params)
-    @event.save
+    @recurring_event = RecurringEvent.new(recurring_event_params)
+    @recurring_event.save
     flash.now[:success] = 'Event was succesfully created!'
   end
 
   def update
-    @event.update(event_params)
+    @recurring_event.update(recurring_event_params)
     flash.now[:success] = 'Event was succesfully updated!'
   end
 
   def destroy
-    @event.destroy
+    @recurring_event.destroy
     flash.now[:success] = 'Event was succesfully destroyed!'
   end
 
   private
 
   def set_event
-    @event = Event.find(params[:id])
+    @recurring_event = RecurringEvent.find(params[:id])
   end
 
-  def event_params
+  def recurring_event_params
     params.require(:event).permit(:title,
                                   :description,
+                                  :visibility,
+                                  :color,
                                   :start_date,
                                   :end_date,
-                                  :event_type,
-                                  :color)
+                                  :schedule_type)
   end
 end

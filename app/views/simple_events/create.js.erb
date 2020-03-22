@@ -1,0 +1,11 @@
+$('.new-event-errors')
+  .html("<%= j render 'shared/errors', resource: @simple_event %>");
+<% if @simple_event.errors.blank? %>
+  $('.flash-messages').html("<%= j render 'shared/messages' %>");
+  $('#calendar').fullCalendar(
+    'renderEvent',
+    $.parseJSON("<%= j raw(SimpleEventSerializer.new(@simple_event).to_json) %>"),
+    true
+  );
+  $('.new-event-modal').modal('hide');
+<% end %>

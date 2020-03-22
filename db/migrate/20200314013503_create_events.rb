@@ -1,12 +1,20 @@
 class CreateEvents < ActiveRecord::Migration[5.2]
   def change
     create_table :events do |t|
-      t.string :title,      null: false
+      t.string :title, null: false
       t.text :description
-      t.date :start_date,   null: false
+      t.string :visibility, null: false
+      t.string :color, null: false
+      t.string :type, default: 'Event', null: false
+
+      # SimpleEvent
+      t.date :date
+      t.integer :duration
+
+      # RecurringEvent
+      t.string :recurrence
+      t.date :start_date
       t.date :end_date
-      t.string :event_type, null: false
-      t.string :color,      null: false
 
       t.timestamps
     end

@@ -1,0 +1,36 @@
+.modal.fade.show-event-modal[
+  id = "simple-event-#{@simple_event.id}"
+  role='dialog'
+  aria-hidden='true']
+
+  .modal-dialog role='document'
+    .modal-content
+      .modal-header
+        h1 = @simple_event.title
+
+      .edit-event-errors
+
+      .edit-form.hidden
+        = render 'simple_event_form', event: @simple_event,
+                                      url: simple_event_path(@simple_event),
+                                      method: 'patch'
+
+      .show-form
+        .modal-body
+          .color.hidden = @simple_event.color
+          p = @simple_event.description
+          h3 = format(@simple_event, :start_end)
+          h3 = format(@simple_event, :duration)
+
+        .modal-footer
+          = link_to 'Cancel', '#',
+                    class: 'button btn btn-primary cancel-event-button'
+          = link_to 'Edit event', '#',
+                    class: 'button btn btn-primary edit-event-button'
+
+          = link_to 'Delete event',
+                    simple_event_path(@simple_event),
+                    class: 'button btn btn-danger',
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "Are you sure?" }

@@ -22,6 +22,10 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'rails-i18n'
+gem 'active_model_serializers'
+gem 'oj'
+
 # Bootstrap
 gem 'bootstrap'
 gem 'slim'
@@ -29,6 +33,8 @@ gem 'jquery-rails'
 
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+
+gem 'montrose'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -64,8 +70,11 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'webdrivers'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'chroma'
   gem 'rails-controller-testing'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
 end
 

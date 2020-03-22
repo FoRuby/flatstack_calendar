@@ -1,0 +1,38 @@
+.modal.fade.show-event-modal[
+  id = "recurring-event-#{@recurring_event.id}"
+  role='dialog'
+  aria-hidden='true']
+
+  .modal-dialog role='document'
+    .modal-content
+      .modal-header
+        h1 = @recurring_event.title
+
+      .edit-event-errors
+
+      .edit-form.hidden
+        = render 'recurring_event_form',
+          event: @recurring_event,
+          url: recurring_event_path(@recurring_event),
+          method: 'patch'
+
+      .show-form
+        .modal-body
+          .color.hidden = @recurring_event.color
+          p = @recurring_event.description
+          h3 = @recurring_event.type
+          h3 Next date:
+          h3 = next_date(@next_date)
+
+        .modal-footer
+          = link_to 'Cancel', '#',
+                    class: 'button btn btn-primary cancel-event-button'
+          = link_to 'Edit event', '#',
+                    class: 'button btn btn-primary edit-event-button'
+
+          = link_to 'Delete event',
+                    recurring_event_path(@recurring_event),
+                    class: 'button btn btn-danger',
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: "Are you sure?" }
