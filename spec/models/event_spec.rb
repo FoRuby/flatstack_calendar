@@ -4,7 +4,7 @@ RSpec.describe Event, type: :model do
   let(:event) { create :event }
 
   describe 'associations' do
-    # it { should belong_to(:user) }
+    it { should belong_to(:user) }
   end
 
   describe 'scopes' do

@@ -1,27 +1,33 @@
 nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
   = link_to 'Home', root_path, class: 'navbar-brand'
 
-  / ul.navbar-nav
-  /   - if user_signed_in?
-  /     li.nav-item
-  /       = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link'
-  /   - else
-  /     li.nav-item
-  /       = link_to 'Sign in', new_user_session_path, class: 'nav-link'
-  /     li.nav-item
-  /       = link_to 'Sign up', new_user_registration_path, class: 'nav-link'
   ul.navbar-nav.mr-auto
     li.nav-item
       = link_to 'Calendar', calendar_path, class: 'nav-link'
 
   ul.navbar-nav
     form.form-inline
-      li.nav-item.nav-button
-        = link_to 'Sign out', '#', method: :delete,
-                                   class: 'nav-link btn btn-outline-danger'
+      - if user_signed_in?
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle[
+            data-toggle='dropdown'
+            href='#'
+            role='button'
+            aria-haspopup='true'
+            aria-expanded='false'] = current_user.name
 
-      li.nav-item.nav-button
-        = link_to 'Sign in', '#', class: 'nav-link btn btn-outline-primary'
+          .dropdown-menu aria-labelledby="dropdownMenuButton"
+            = link_to 'Edit profile', edit_user_registration_path,
+                                      class: 'dropdown-item'
+        li.nav-item.nav-button
+          = link_to 'Sign out', destroy_user_session_path,
+                                method: :delete,
+                                class: 'nav-link btn btn-outline-danger'
+      - else
+        li.nav-item.nav-button
+          = link_to 'Sign in', new_user_session_path,
+                               class: 'nav-link btn btn-outline-primary'
 
-      li.nav-item.nav-button
-        = link_to 'Sign up', '#', class: 'nav-link btn btn-outline-success'
+        li.nav-item.nav-button
+          = link_to 'Sign up', new_user_registration_path,
+                               class: 'nav-link btn btn-outline-success'

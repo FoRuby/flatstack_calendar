@@ -1,0 +1,40 @@
+.row.d-flex.justify-content-center
+  .col-6.bg-secondary
+    h2 Sign up
+
+    = form_for resource, as: resource_name,
+                         url: registration_path(resource_name) do |f|
+
+      = render 'shared/errors', resource: resource
+
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control',
+                              placeholder: 'Enter your name'
+
+      .form-group
+        = f.label :email
+        = f.email_field :email, autocomplete: 'email',
+                                class: 'form-control',
+                                placeholder: 'Enter your email',
+                                required: true
+
+      .form-group
+        = f.label :password
+        = f.password_field :password, autocomplete: 'new-password',
+                                      class: 'form-control',
+                                      placeholder: 'Enter your password',
+                                      required: true
+
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation,
+                           autocomplete: 'new-password',
+                           class: 'form-control',
+                           placeholder: 'Repeat your password',
+                           required: true
+
+      .actions
+        = f.submit 'Sign up', class: 'btn btn-block btn-success'
+
+    = render 'devise/shared/links'

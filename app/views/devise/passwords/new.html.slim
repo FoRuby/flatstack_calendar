@@ -1,0 +1,22 @@
+.row.d-flex.justify-content-center
+  .col-6.bg-secondary
+    h2 Forgot your password?
+
+    = form_for resource, as: resource_name,
+                         url: password_path(resource_name),
+                         html: { method: :post } do |f|
+
+      = render 'shared/errors', resource: resource
+
+      .form-group
+        = f.label :email
+        = f.email_field :email, autocomplete: 'email',
+                                class: 'form-control',
+                                placeholder: 'Enter your email',
+                                required: true
+
+      .actions
+        = f.submit 'Send me reset password instructions',
+                   class: 'btn btn-block btn-primary'
+
+    = render "devise/shared/links"
