@@ -9,6 +9,7 @@ FactoryBot.define do
         to: start_date + 50.days
       )
     end
+    user
   end
 
   trait :daily do

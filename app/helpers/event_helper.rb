@@ -15,4 +15,8 @@ module EventHelper
   def duration
     "Event duration: #{@event.duration} #{'day'.pluralize(@event.duration)}"
   end
+
+  def author
+    "Author: #{@event.user.name}"
+  end
 end

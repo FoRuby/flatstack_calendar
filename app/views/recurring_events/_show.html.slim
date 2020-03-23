@@ -18,11 +18,12 @@
 
       .show-form
         .modal-body
-          .color.hidden = @recurring_event.color
           p = @recurring_event.description
+          h3 = format @recurring_event, :author
           h3 = @recurring_event.type
           h3 Next date:
           h3 = next_date(@next_date)
+          .color.hidden = @recurring_event.color
 
         .modal-footer
           = link_to 'Cancel', '#',

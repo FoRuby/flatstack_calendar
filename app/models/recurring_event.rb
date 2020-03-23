@@ -7,6 +7,8 @@ class RecurringEvent < Event
 
   serialize :recurrence, Montrose::Recurrence
 
+  belongs_to :user
+
   validates :start_date, :end_date, presence: true
   validate :validate_end_date_should_be_greater_then_start_date
 

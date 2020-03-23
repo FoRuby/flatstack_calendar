@@ -1,13 +1,12 @@
 class SimpleEventsController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!
   before_action :set_event, only: %i[show update destroy]
 
   def show
   end
 
   def create
-    @simple_event = SimpleEvent.new(simple_event_params)
-    @simple_event.user = current_user
+    @simple_event = current_user.simple_events.new(simple_event_params)
     @simple_event.save
     flash.now[:success] = 'Event was succesfully created!'
   end

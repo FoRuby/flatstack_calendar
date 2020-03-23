@@ -4,27 +4,34 @@ RSpec.describe Event, type: :model do
   let(:event) { create :event }
 
   describe 'associations' do
-    it { should belong_to(:user) }
   end
 
   describe 'scopes' do
     subject { build(:event) }
 
-    let!(:public_event1) { create :event, visibility: 'public' }
-    let!(:public_event2) { create :event, visibility: 'public' }
-    let!(:private_event1) { create :event, visibility: 'private' }
-    let!(:private_event2) { create :event, visibility: 'private' }
+    let!(:user1) { create :user }
+    let!(:user2) { create :user }
+    let!(:public_event1) { create :simple_event, visibility: 'public', user: user1 }
+    let!(:public_event2) { create :recurring_event, visibility: 'public', user: user2 }
+    let!(:private_event1) { create :simple_event, visibility: 'private', user: user1 }
+    let!(:private_event2) { create :recurring_event, visibility: 'private', user: user2 }
 
-    context "events scope by event: 'public'" do
+    context 'public_events' do
       subject { Event.public_events.to_a }
 
       it { is_expected.to match_array [public_event1, public_event2] }
     end
 
-    context "events scope by event: 'private'" do
+    context 'private_events' do
       subject { Event.private_events.to_a }
 
       it { is_expected.to match_array [private_event1, private_event2] }
+    end
+
+    context 'user_events' do
+      subject { Event.user_events(user1).to_a }
+
+      it { is_expected.to match_array [public_event1, private_event1] }
     end
   end
 

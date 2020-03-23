@@ -4,6 +4,7 @@ RSpec.describe RecurringEvent, type: :model do
   let(:recurring_event) { create :recurring_event, :daily }
 
   describe 'associations' do
+    it { should belong_to(:user) }
   end
 
   describe 'scopes' do

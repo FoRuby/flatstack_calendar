@@ -20,5 +20,12 @@ describe EventHelper do
           .to eq 'Event duration: 5 days'
       end
     end
+
+    context 'author' do
+      it 'return event author' do
+        expect(helper.format(simple_event, :author))
+          .to eq "Author: #{simple_event.user.name}"
+      end
+    end
   end
 end

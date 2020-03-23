@@ -4,7 +4,6 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     visibility { 'public' }
     color { Faker::Color.hex_color }
-    user
   end
 
   trait :invalid_event do

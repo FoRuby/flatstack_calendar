@@ -1,4 +1,6 @@
 class CalendarsController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @simple_event = SimpleEvent.new
     @recurring_event = RecurringEvent.new
@@ -17,13 +19,14 @@ class CalendarsController < ApplicationController
   end
 
   def my_simple_events
-    @simple_events = SimpleEvent.private_events.all
+    @simple_events = SimpleEvent.user_events(current_user).all
 
     render json: @simple_events, adapter: :attributes
   end
 
   def my_recurring_events
-    @recurring_events = RecurringEvent.private_events.all.map(&:events).flatten
+    @recurring_events =
+      RecurringEvent.user_events(current_user).all.map(&:events).flatten
 
     render json: @recurring_events, adapter: :attributes
   end
