@@ -5,3 +5,5 @@ function flash_handler() {
     });
   }, 5000);
 };
+
+$(document).on('turbolinks:load', flash_handler);

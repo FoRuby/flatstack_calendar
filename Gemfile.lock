@@ -70,6 +70,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    capybara-email (3.0.1)
+      capybara (>= 2.4, < 4.0)
+      mail
     case_transform (0.2)
       activesupport
     childprocess (3.0.0)
@@ -288,6 +291,7 @@ DEPENDENCIES
   bootstrap
   byebug
   capybara (>= 2.15)
+  capybara-email
   chroma
   coffee-rails (~> 4.2)
   database_cleaner

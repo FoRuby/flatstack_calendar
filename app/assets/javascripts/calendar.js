@@ -27,6 +27,7 @@ var eventCalendar = function() {
       if(view.name == 'month_private' && localStorage.getItem('previous_view') !== 'month_private') {
         calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
         calendar.fullCalendar('removeEventSource', '/calendar/recurring_events.json');
+        calendar.fullCalendar('removeEvents');
         calendar.fullCalendar('addEventSource', '/calendar/my_recurring_events.json');
         calendar.fullCalendar('addEventSource', '/calendar/my_simple_events.json');
        };
@@ -35,7 +36,7 @@ var eventCalendar = function() {
       if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
         calendar.fullCalendar('removeEventSource', '/calendar/my_recurring_events.json');
         calendar.fullCalendar('removeEventSource', '/calendar/my_simple_events.json');
-
+        calendar.fullCalendar('removeEvents');
         calendar.fullCalendar('addEventSource', '/calendar/simple_events.json');
         calendar.fullCalendar('addEventSource', '/calendar/recurring_events.json');
        };

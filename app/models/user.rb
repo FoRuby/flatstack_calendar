@@ -3,7 +3,8 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :confirmable
 
   has_many :recurring_events
   has_many :simple_events

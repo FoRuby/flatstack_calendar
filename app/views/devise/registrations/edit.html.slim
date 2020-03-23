@@ -24,12 +24,10 @@
           = resource.unconfirmed_email
 
       .form-group
-        = f.label :password
-          i = "(leave blank if you don't want to change it)"
+        = f.label :password, 'New password'
         = f.password_field :password, autocomplete: 'new-password',
                                       class: 'form-control',
-                                      placeholder: 'Enter new password'
-
+                                      placeholder: "leave blank if you don't want to change it"
 
       .form-group
         = f.label :password_confirmation
@@ -40,11 +38,10 @@
 
       .form-group
         = f.label :current_password
-        i = "(we need your current password to confirm your changes)"
         = f.password_field :current_password,
                            autocomplete: 'current-password',
                            class: 'form-control',
-                           placeholder: 'Enter your password'
+                           placeholder: 'we need your current password to confirm your changes'
 
       .actions
         = f.submit 'Update', class: 'btn btn-block btn-success'

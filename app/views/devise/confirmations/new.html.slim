@@ -1,18 +1,26 @@
+- if resource.pending_reconfirmation?
+  - value = resource.unconfirmed_email
+- else
+  - value = resource.email
+
+
 .row.d-flex.justify-content-center
   .col-6.bg-secondary.rounded-lg.pb-3.pt-3.mt-5.border.border-dark
     h2 Resend confirmation instructions
-      = form_for resource, as: resource_name,
-                           url: confirmation_path(resource_name),
-                           html: { method: :post } do |f|
-       = render 'shared/errors', resource: resource
+    = form_for resource, as: resource_name,
+                         url: confirmation_path(resource_name),
+                         html: { method: :post } do |f|
+      = render 'shared/errors', resource: resource
 
-       .form-group
-         = f.label :email
-         = f.email_field :email, autocomplete: 'email',
-                                 class: 'form-control',
-                                 value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+
+      .form-group
+        = f.label :email
+        = f.email_field :email, autocomplete: 'email',
+                                class: 'form-control',
+                                value: value
 
       .actions
-        = f.submit 'Resend confirmation instructions'
+          = f.submit 'Resend confirmation instructions',
+                     class: 'btn btn-block btn-primary'
 
-      = render "devise/shared/links"
+    = render 'devise/shared/links'
