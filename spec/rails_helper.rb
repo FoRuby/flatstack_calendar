@@ -11,6 +11,7 @@ require 'rspec/rails'
 require 'spec_helper'
 require 'capybara/rspec'
 require 'webdrivers'
+require 'devise'
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -20,6 +21,12 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
+  # For Devise > 4.1.1
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  # Add ControllerHelpers module for controllers testing
+  config.include ControllerHelpers, type: :controller
+  # Add FeatureHelpers module for feature testing
+  config.include FeatureHelpers, type: :feature
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   # FactoryBot.create(...) => create(...) |new|create_list|...
