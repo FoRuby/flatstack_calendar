@@ -17,10 +17,10 @@
 
       .show-form
         .modal-body
-          .color.hidden = @simple_event.color
-          p = @simple_event.description
+          p = @simple_event.description.to_s
           h3 = format(@simple_event, :start_end)
           h3 = format(@simple_event, :duration)
+          .color.hidden = @simple_event.color
 
         .modal-footer
           = link_to 'Cancel', '#',

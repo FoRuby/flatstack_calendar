@@ -7,7 +7,7 @@ feature 'User can create simple event', %(
   describe 'Authenticated user', js: true do
     background do
       # login(user)
-      visit root_path
+      visit calendar_path
     end
 
     scenario 'tries to create simple event with correct params' do

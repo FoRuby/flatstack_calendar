@@ -1,4 +1,5 @@
 class RecurringEventsController < ApplicationController
+  before_action :authenticate_user!, except: :show
   before_action :set_event, only: %i[show update destroy]
 
   def show
@@ -8,6 +9,7 @@ class RecurringEventsController < ApplicationController
 
   def create
     @recurring_event = RecurringEvent.new(recurring_event_params)
+    @recurring_event.user = current_user
     @recurring_event.save
     flash.now[:success] = 'Event was succesfully created!'
   end

@@ -1,5 +1,5 @@
 class CalendarsController < ApplicationController
-  def calendar
+  def show
     @simple_event = SimpleEvent.new
     @recurring_event = RecurringEvent.new
   end

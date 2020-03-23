@@ -22,6 +22,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'devise'
 gem 'rails-i18n'
 gem 'active_model_serializers'
 gem 'oj'
@@ -35,6 +36,8 @@ gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 
 gem 'montrose'
+
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -65,6 +68,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener'
 end
 
 group :test do

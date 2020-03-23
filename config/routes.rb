@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root 'calendars#calendar'
+  devise_for :users
+  root 'home#index'
+
+  get 'home/index'
 
   resource :calendar do
     member do
@@ -7,7 +10,6 @@ Rails.application.routes.draw do
       get 'recurring_events'
       get 'my_simple_events'
       get 'my_recurring_events'
-      get 'calendar'
     end
   end
 

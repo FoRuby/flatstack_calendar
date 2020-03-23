@@ -142,7 +142,6 @@ var eventCalendar = function() {
 }
 
 function clearCalendar() {
-  $('#calendar').fullCalendar('delete');
   $('#calendar').html('');
 };
 
