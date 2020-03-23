@@ -11,7 +11,7 @@
       .edit-event-errors
 
       .edit-form.hidden
-        = render 'simple_event_form', event: @simple_event,
+        = render 'simple_event_form', simple_event: @simple_event,
                                       url: simple_event_path(@simple_event),
                                       method: 'patch'
 

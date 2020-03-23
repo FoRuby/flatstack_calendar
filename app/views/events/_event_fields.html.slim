@@ -1,0 +1,20 @@
+.form-group.event-title
+  = f.label :title
+  = f.text_field :title, class: 'form-control',
+                         placeholder: 'Enter event title',
+                         required: true
+
+.form-group.event-description
+  = f.label :description
+  = f.text_area :description, class: 'form-control',
+                              placeholder: 'Enter event description'
+
+.row
+  .col.form-group.event-color
+    = f.label :color
+    = f.color_field :color, class: 'form-control', required: true
+
+  .col.form-group.event-visibility
+    = f.label :visibility
+    = f.select :visibility, Event::EVENT_TYPES, {},
+                            class: 'form-control form-control-md'

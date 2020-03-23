@@ -12,7 +12,7 @@
 
       .edit-form.hidden
         = render 'recurring_event_form',
-          event: @recurring_event,
+          recurring_event: @recurring_event,
           url: recurring_event_path(@recurring_event),
           method: 'patch'
 
