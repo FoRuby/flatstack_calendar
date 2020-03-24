@@ -28,14 +28,14 @@ var eventCalendar = function() {
         calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
         calendar.fullCalendar('removeEventSource', '/calendar/recurring_events.json');
         calendar.fullCalendar('removeEvents');
-        calendar.fullCalendar('addEventSource', '/calendar/my_recurring_events.json');
-        calendar.fullCalendar('addEventSource', '/calendar/my_simple_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/user_recurring_events.json');
+        calendar.fullCalendar('addEventSource', '/calendar/user_simple_events.json');
        };
 
        // My Events => Public Events
       if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
-        calendar.fullCalendar('removeEventSource', '/calendar/my_recurring_events.json');
-        calendar.fullCalendar('removeEventSource', '/calendar/my_simple_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/user_recurring_events.json');
+        calendar.fullCalendar('removeEventSource', '/calendar/user_simple_events.json');
         calendar.fullCalendar('removeEvents');
         calendar.fullCalendar('addEventSource', '/calendar/simple_events.json');
         calendar.fullCalendar('addEventSource', '/calendar/recurring_events.json');

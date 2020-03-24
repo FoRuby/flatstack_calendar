@@ -18,13 +18,13 @@ class CalendarsController < ApplicationController
     render json: @recurring_events, adapter: :attributes
   end
 
-  def my_simple_events
+  def user_simple_events
     @simple_events = SimpleEvent.user_events(current_user).all
 
     render json: @simple_events, adapter: :attributes
   end
 
-  def my_recurring_events
+  def user_recurring_events
     @recurring_events =
       RecurringEvent.user_events(current_user).all.map(&:events).flatten
 

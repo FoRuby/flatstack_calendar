@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     member do
       get 'simple_events'
       get 'recurring_events'
-      get 'my_simple_events'
-      get 'my_recurring_events'
+      get 'user_simple_events'
+      get 'user_recurring_events'
     end
   end
 

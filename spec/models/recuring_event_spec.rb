@@ -61,5 +61,48 @@ RSpec.describe RecurringEvent, type: :model do
         expect(input).to eq output
       end
     end
+
+    context '#next_date' do
+      let(:recurring_event) do
+        create :recurring_event,
+               :daily,
+               start_date: Date.today,
+               end_date: Date.tomorrow
+      end
+
+      context 'next date exist' do
+        it 'should return next event date' do
+          expect(recurring_event.next_date(Date.today))
+            .to eq Date.tomorrow
+        end
+      end
+
+      context 'next date does not exist' do
+        it 'should return nil' do
+          expect(recurring_event.next_date(Date.tomorrow))
+            .to be_nil
+        end
+      end
+    end
+    context '#events' do
+      let(:recurring_event) do
+        create :recurring_event,
+               :weekly,
+               start_date: Date.today,
+               end_date: Date.today + 1.week
+      end
+
+      it 'should return recurring_events collection' do
+        event1 = RecurringEvent.new(recurring_event.attributes)
+        event1.start_date = Date.today
+        event1.end_date = Date.today + 1
+
+        event2 = RecurringEvent.new(recurring_event.attributes)
+        event2.start_date = Date.today + 1.week
+        event2.end_date = Date.today + 8.days
+
+        expect(recurring_event.events).to match_array [event1, event2]
+      end
+    end
   end
 end

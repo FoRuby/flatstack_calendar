@@ -6,7 +6,7 @@ FactoryBot.define do
     end_date do
       Faker::Time.between(
         from: start_date,
-        to: start_date + 50.days
+        to: start_date + 77.days
       )
     end
     user
