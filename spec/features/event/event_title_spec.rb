@@ -4,8 +4,10 @@ feature 'interactive changing event title', js: true do
   given!(:simple_event) do
     create :simple_event, date: Date.current, duration: 1
   end
+  given(:user) { create :user }
 
   background do
+    login(user)
     visit calendar_path
     find("#event-#{simple_event.id}").click
     click_on 'Edit event'

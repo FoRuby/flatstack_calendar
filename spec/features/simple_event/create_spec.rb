@@ -5,8 +5,10 @@ feature 'User can create simple event', %(
   I'd like to create simple event
 ) do
   describe 'Authenticated user', js: true do
+    given(:user) { create :user }
+
     background do
-      # login(user)
+      login(user)
       visit calendar_path
     end
 
@@ -48,5 +50,14 @@ feature 'User can create simple event', %(
     #     expect(page).to have_content 'Duration must be greater than 0'
     #   end
     # end
+  end
+
+  describe 'Unauthenticated user', js: true do
+    scenario 'tries to create simple event' do
+      visit calendar_path
+
+      expect(page)
+        .to have_content 'You need to sign in or sign up before continuing.'
+    end
   end
 end

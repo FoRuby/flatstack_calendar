@@ -9,9 +9,10 @@ feature 'User can update recurring event', %(
       create :recurring_event, :daily, start_date: Date.today,
                                        end_date: Date.today + 2
     end
+    given(:user) { create :user }
 
     background do
-      # login(user)
+      login(user)
       visit calendar_path
       first("#event-#{recurring_event.id}").click
       click_on 'Edit event'
@@ -57,6 +58,15 @@ feature 'User can update recurring event', %(
         expect(page).to have_content 'Start date should be less then end date'
         expect(page).to have_content 'End date should be greater then start date'
       end
+    end
+  end
+
+  describe 'Unauthenticated user', js: true do
+    scenario 'tries to update recurring event' do
+      visit calendar_path
+
+      expect(page)
+        .to have_content 'You need to sign in or sign up before continuing.'
     end
   end
 end

@@ -5,8 +5,10 @@ feature 'User can create recurring event', %(
   I'd like to create recurring event
 ) do
   describe 'Authenticated user', js: true do
+    given(:user) { create :user }
+
     background do
-      # login(user)
+      login(user)
       visit calendar_path
     end
 
@@ -50,6 +52,15 @@ feature 'User can create recurring event', %(
 
       expect(page).to have_content 'Start date should be less then end date'
       expect(page).to have_content 'End date should be greater then start date'
+    end
+  end
+
+  describe 'Unauthenticated user', js: true do
+    scenario 'tries to create recurring event' do
+      visit calendar_path
+
+      expect(page)
+        .to have_content 'You need to sign in or sign up before continuing.'
     end
   end
 end

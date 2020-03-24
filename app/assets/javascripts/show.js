@@ -29,7 +29,7 @@ function edit_event_button_click_listener() {
 };
 
 function color_change_listener() {
-  $('.color-input').on('change', function() {
+  $('.event-color input').on('change', function() {
     color = $(this).val();
     $('.show-event-modal .modal-header').css('background-color', color);
   });

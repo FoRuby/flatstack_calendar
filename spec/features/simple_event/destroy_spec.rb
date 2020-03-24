@@ -8,9 +8,10 @@ feature 'User can destroy simple event', %(
     given!(:simple_event) do
       create :simple_event, date: Date.current, duration: 1
     end
+    given(:user) { create :user }
 
     background do
-      # login(user)
+      login(user)
       visit calendar_path
       find("#event-#{simple_event.id}").click
     end
@@ -26,6 +27,15 @@ feature 'User can destroy simple event', %(
       within('#calendar') do
         expect(page).to_not have_content simple_event.title.to_s
       end
+    end
+  end
+
+  describe 'Unauthenticated user', js: true do
+    scenario 'tries to destroy simple event' do
+      visit calendar_path
+
+      expect(page)
+        .to have_content 'You need to sign in or sign up before continuing.'
     end
   end
 end

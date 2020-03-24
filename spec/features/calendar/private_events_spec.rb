@@ -5,16 +5,16 @@ feature 'User can create private events', %(
   I'd like to create private event
 ) do
   describe 'Authenticated user', js: true do
+    given(:user) { create :user }
     given!(:public_simple_event) do
       create :simple_event, duration: 1
     end
-
     given!(:private_simple_event) do
-      create :simple_event, duration: 1, visibility: 'private'
+      create :simple_event, duration: 1, visibility: 'private', user: user
     end
 
     background do
-      # login(user)
+      login(user)
       visit calendar_path
     end
 
