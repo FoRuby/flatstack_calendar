@@ -43,7 +43,7 @@ class RecurringEvent < Event
   def set_recurrence
     return if schedule_type.nil?
 
-    self.recurrence = RecurringEventHelper.create_recurrence(schedule_type)
+    self.recurrence = CreateRecurrenceService.call(schedule_type)
   end
 
   def validate_end_date_should_be_greater_then_start_date

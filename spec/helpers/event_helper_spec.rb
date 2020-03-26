@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe EventHelper do
+RSpec.describe EventHelper, type: :helper do
   let(:simple_event) { create :simple_event, date: Date.current, duration: 5 }
 
   describe '#format' do

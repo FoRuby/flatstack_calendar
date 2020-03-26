@@ -1,12 +1,4 @@
 module RecurringEventHelper
-  SCHEDULE_TYPES = %w[day week month year]
-
-  # Из входных данных создает правило повторений
-  # TODO: допилить полноценный функционал и вынести
-  def self.create_recurrence(schedule_type)
-    Montrose.every(schedule_type.to_sym)
-  end
-
   def self.to_json(recurring_event)
     ActiveModel::Serializer::CollectionSerializer
       .new(

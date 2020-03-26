@@ -19,7 +19,7 @@
     .row
       .col.form-group
         = f.label :schedule_type
-        = f.select :schedule_type, RecurringEventHelper::SCHEDULE_TYPES, {},
+        = f.select :schedule_type, CreateRecurrenceService::SCHEDULE_TYPES, {},
                                    class: 'form-control form-control-md'
 
   .modal-footer

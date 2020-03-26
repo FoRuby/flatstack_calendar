@@ -1,19 +1,6 @@
 require 'rails_helper'
 
-describe RecurringEventHelper do
-  describe '.create_recurrence' do
-    subject { RecurringEventHelper }
-
-    it 'with SCHEDULE_TYPES' do
-      RecurringEventHelper::SCHEDULE_TYPES.each do |schedule_type|
-        recurrence_hash = subject.create_recurrence(schedule_type).to_h
-
-        expect(recurrence_hash).to have_key(:every)
-        expect(recurrence_hash[:every]).to eq schedule_type.to_sym
-      end
-    end
-  end
-
+RSpec.describe RecurringEventHelper, type: :service do
   describe '#next_date(next_date)' do
     let(:recurring_event) do
       create :recurring_event, :daily, start_date: Date.current,
