@@ -11,6 +11,7 @@ require 'rspec/rails'
 require 'spec_helper'
 require 'capybara/rspec'
 require 'capybara/email/rspec'
+require 'pundit/rspec'
 require 'webdrivers'
 require 'devise'
 

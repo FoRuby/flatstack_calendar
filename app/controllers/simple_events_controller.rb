@@ -25,6 +25,7 @@ class SimpleEventsController < ApplicationController
 
   def set_event
     @simple_event = SimpleEvent.find(params[:id])
+    authorize @simple_event
   end
 
   def simple_event_params

@@ -26,12 +26,15 @@
         .modal-footer
           = link_to 'Cancel', '#',
                     class: 'button btn btn-primary cancel-event-button'
-          = link_to 'Edit event', '#',
-                    class: 'button btn btn-primary edit-event-button'
 
-          = link_to 'Delete event',
-                    simple_event_path(@simple_event),
-                    class: 'button btn btn-danger',
-                    method: :delete,
-                    remote: true,
-                    data: { confirm: "Are you sure?" }
+          - if policy(@simple_event).update?
+            = link_to 'Edit event', '#',
+                      class: 'button btn btn-primary edit-event-button'
+
+          - if policy(@simple_event).destroy?
+            = link_to 'Delete event',
+                      simple_event_path(@simple_event),
+                      class: 'button btn btn-danger',
+                      method: :delete,
+                      remote: true,
+                      data: { confirm: "Are you sure?" }

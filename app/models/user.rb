@@ -10,4 +10,10 @@ class User < ApplicationRecord
   has_many :simple_events
 
   validates :name, presence: true
+
+  def author?(item)
+    return false unless item.respond_to?(:user)
+
+    id == item.user_id
+  end
 end

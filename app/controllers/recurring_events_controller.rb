@@ -27,6 +27,7 @@ class RecurringEventsController < ApplicationController
 
   def set_event
     @recurring_event = RecurringEvent.find(params[:id])
+    authorize @recurring_event
   end
 
   def recurring_event_params
