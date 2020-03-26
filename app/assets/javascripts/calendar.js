@@ -46,7 +46,7 @@ var eventCalendar = function() {
 
     selectable: true,
     selectHelper: true,
-    editable: true,
+    editable: false,
     eventLimit: true,
     defaultView: 'month_public',
     eventSources: [
@@ -71,6 +71,7 @@ var eventCalendar = function() {
 
     eventAfterRender: function(event ,element) {
       element.attr('id', 'event-' + event.id);
+      element.addClass('hoverable');
       flash_handler();
     },
 
@@ -84,29 +85,6 @@ var eventCalendar = function() {
       // 4 RecurringEventForm
       $('#event_start_date').val(start.format('YYYY-MM-DD'));
       $('#event_end_date').val(end.format('YYYY-MM-DD'));
-    },
-
-    eventDrop: function(event, delta, revertFunc) {
-      // TODO: придумать как обробатывать RecurringEvent
-      if (event.type == 'SimpleEvent') {
-        data = {
-          event: {
-            id: event.id,
-            date: event.start.format(),
-            start_date: event.start.format(),
-            end_date: event.end.format()
-          },
-          authenticity_token: $('[name="csrf-token"]')[0].content
-        };
-
-        $.ajax({
-          type: 'patch',
-          url: event.path,
-          data:  data,
-          success: function(data) {},
-          error: function(data) {}
-        });
-      };
     },
 
     dayClick: function(start) {

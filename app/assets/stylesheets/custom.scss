@@ -19,3 +19,7 @@
 .alert-alert {
   @extend .alert-danger
 }
+
+.hoverable {
+  cursor: pointer;
+}
