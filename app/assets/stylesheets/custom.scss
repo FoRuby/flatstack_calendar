@@ -10,6 +10,14 @@
     border-bottom-color: #007bff;
 }
 
+.hoverable {
+  cursor: pointer;
+}
+
+.show-form .modal-body p {
+  font-size: 18px;
+}
+
 // Devise flash
 
 .alert-notice {
@@ -18,12 +26,4 @@
 
 .alert-alert {
   @extend .alert-danger
-}
-
-.hoverable {
-  cursor: pointer;
-}
-
-.show-form .modal-body p {
-  font-size: 18px;
 }

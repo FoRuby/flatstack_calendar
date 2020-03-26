@@ -2,35 +2,59 @@ require 'rails_helper'
 
 RSpec.describe SimpleEventsController, type: :controller do
   describe 'DELETE #destroy' do
-    let!(:simple_event) { create(:simple_event) }
+    let(:author) { create :user }
+    let!(:simple_event) { create :simple_event, user: author }
     let(:params) { { id: simple_event, format: :js } }
 
-    describe 'Authenticated user' do
-      let(:user) { create :user }
+    describe 'Authenticated' do
+      before { login author }
 
-      before { login user }
+      context 'author' do
+        it 'delete simple_event from db' do
+          expect { delete :destroy, params: params }
+            .to change(SimpleEvent, :count)
+        end
 
-      it 'delete simple_event from db' do
-        expect { delete :destroy, params: params }
-          .to change(SimpleEvent, :count)
+        it 'render destroy view' do
+          delete :destroy, params: params
+
+          expect(response).to render_template :destroy
+        end
+
+        it 'respond with js format' do
+          delete :destroy, params: params
+
+          expect(response.content_type).to eq 'text/javascript'
+        end
+
+        it 'returns status :ok' do
+          delete :destroy, params: params
+
+          expect(response).to have_http_status :ok
+        end
       end
 
-      it 'render destroy view' do
-        delete :destroy, params: params
+      context 'not author' do
+        let(:user) { create :user }
 
-        expect(response).to render_template :destroy
-      end
+        before { login user }
 
-      it 'respond with js format' do
-        delete :destroy, params: params
+        it 'does not delete simple_event from db' do
+          expect { delete :destroy, params: params }
+            .to_not change(SimpleEvent, :count)
+        end
 
-        expect(response.content_type).to eq 'text/javascript'
-      end
+        it 'respond with html format' do
+          delete :destroy, params: params
 
-      it 'returns status :ok' do
-        delete :destroy, params: params
+          expect(response.content_type).to eq 'text/html'
+        end
 
-        expect(response).to have_http_status :ok
+        it 'returns status :redirect' do
+          delete :destroy, params: params
+
+          expect(response).to have_http_status :redirect
+        end
       end
     end
 

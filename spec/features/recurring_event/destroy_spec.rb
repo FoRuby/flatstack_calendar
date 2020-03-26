@@ -5,29 +5,46 @@ feature 'User can destroy recurring event', %(
   I'd like to destroy event
 ) do
   describe 'Authenticated user', js: true do
+    given(:author) { create :user }
     given!(:recurring_event) do
-      create :recurring_event, :daily, start_date: Date.today,
-                                       end_date: Date.today + 2
-    end
-    given(:user) { create :user }
-
-    background do
-      login(user)
-      visit calendar_path
-      first("#event-#{recurring_event.id}").click
+      create :recurring_event, :daily, user: author,
+                                       start_date: Date.today,
+                                       end_date: Date.today + 1
     end
 
-    scenario 'tries to destroy recurring event' do
-      within('#calendar') do
-        expect(page).to have_content recurring_event.title.to_s,
-                                     count: recurring_event.dates.count
+    context 'author' do
+      background do
+        login author
+        visit calendar_path
+        first("#event-#{recurring_event.id}").click
       end
 
-      accept_confirm { click_on 'Delete event' }
+      scenario 'tries to destroy recurring event' do
+        within('#calendar') do
+          expect(page).to have_content recurring_event.title.to_s,
+                                       count: recurring_event.dates.count
+        end
 
-      expect(page).to have_content 'Event was succesfully destroyed!'
-      within('#calendar') do
-        expect(page).to_not have_content recurring_event.title.to_s
+        accept_confirm { click_on 'Delete event' }
+
+        expect(page).to have_content 'Event was succesfully destroyed!'
+        within('#calendar') do
+          expect(page).to_not have_content recurring_event.title.to_s
+        end
+      end
+    end
+
+    context 'not author' do
+      given(:user) { create :user }
+
+      background do
+        login user
+        visit calendar_path
+        first("#event-#{recurring_event.id}").click
+      end
+
+      scenario 'tries to destroy recurring event' do
+        expect(page).to_not have_content 'Delete event'
       end
     end
   end

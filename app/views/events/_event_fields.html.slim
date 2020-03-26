@@ -16,5 +16,6 @@
 
   .col.form-group.event-visibility
     = f.label :visibility
-    = f.select :visibility, Event::EVENT_TYPES, {},
+    = f.select :visibility, Event::EVENT_TYPES,
+                            { selected: 'public' },
                             class: 'form-control form-control-md'

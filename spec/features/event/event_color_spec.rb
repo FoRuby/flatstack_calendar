@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 feature 'interactive changing event header color', js: true do
-  given(:user) { create :user }
-  given!(:simple_event) do
-    create :simple_event, date: Date.current, duration: 1, user: user
-  end
+  given!(:simple_event) { create :simple_event, date: Date.current, duration: 1 }
 
   background do
-    login(user)
+    login simple_event.user
     visit calendar_path
     click_on 'My Events'
     find("#event-#{simple_event.id}").click
