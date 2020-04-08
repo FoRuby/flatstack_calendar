@@ -1,6 +1,6 @@
-function flash_handler() {
-  setTimeout(function() {
-    $(".alert").fadeTo(400, 0).slideUp(400, function(){
+const flash_handler = () => {
+  setTimeout(() => {
+    $('.alert').fadeTo(400, 0).slideUp(400, () => {
       $('.alert').remove();
     });
   }, 5000);

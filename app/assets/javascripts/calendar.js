@@ -1,5 +1,5 @@
-eventCalendar = function() {
-  calendar = $('#calendar')
+const eventCalendar = () => {
+  calendar = $('#calendar');
   calendar.fullCalendar({
     header: {
       left: 'prev, next, today',
@@ -18,7 +18,6 @@ eventCalendar = function() {
       }
     },
 
-
     selectable: true,
     selectHelper: true,
     editable: false,
@@ -28,21 +27,17 @@ eventCalendar = function() {
       '/calendar/simple_events.json',
       '/calendar/recurring_events.json',
     ],
-    viewRender: view_render,
 
-    eventRender: event_render,
-
-    eventAfterRender: event_after_render,
-
+    viewRender: viewRender,
+    eventRender: eventRender,
+    eventAfterRender: eventAfterRender,
     select: select,
-
-    dayClick: day_click,
-
-    eventClick: event_click,
+    dayClick: dayClick,
+    eventClick: eventClick,
   })
 };
 
-select = function(start, end) {
+const select = (start, end) => {
   $('.new-event-modal').modal('show');
 
   // 4 SimpleEventForm
@@ -52,20 +47,22 @@ select = function(start, end) {
   // 4 RecurringEventForm
   $('#event_start_date').val(start.format('YYYY-MM-DD'));
   $('#event_end_date').val(end.format('YYYY-MM-DD'));
-}
+};
 
-event_click = function(event, jsEvent, view) {
-  data = {
+const eventClick = (event, jsEvent, view) => {
+  let data = {
     event: {
       id: event.id,
       start_date: event.start.format(),
       format: 'js'
     }
   };
+  // TODO: как-нибудь избавиться от вызова методов, по идее должен отрабатывать turbolinks
   $.ajax({
     type: 'GET',
     contentType: 'application/json',
     url: event.path,
+    dataType: 'script',
     data: data,
     success: function(data) {
       edit_event_button_click_listener();
@@ -73,22 +70,21 @@ event_click = function(event, jsEvent, view) {
       cancel_event_button_click_listener();
       color_change_listener();
       title_change_listener();
-    },
-    error: function(data) {}
+    }
   });
 };
 
-day_click = function(start) {
+const dayClick = start => {
   clear_form();
   $('.new-event-modal').modal();
   // 4 SimpleEventForm
   $('#event_date').val(start.format('YYYY-MM-DD'));
   $('#event_duration').val('1');
-}
+};
 
-view_render = function(view) {
+const viewRender = view => {
   // костыль с куками
-  previous_view = localStorage.getItem('previous_view') || view.name
+  let previous_view = localStorage.getItem('previous_view') || view.name
   localStorage.setItem('previous_view', previous_view);
 
   // Public Events => My Events
@@ -110,9 +106,9 @@ view_render = function(view) {
    };
 
    localStorage.setItem('previous_view', view.name);
-}
+};
 
-event_render = function(eventObj, $el) {
+const eventRender = (eventObj, $el) => {
   $el.popover({
     title: eventObj.title,
     content: eventObj.description,
@@ -125,15 +121,15 @@ event_render = function(eventObj, $el) {
       "hide": 100
     }
   });
-}
+};
 
-event_after_render = function(event ,element) {
+const eventAfterRender = (event, element) => {
   element.attr('id', 'event-' + event.id);
   element.addClass('hoverable');
   flash_handler();
-}
+};
 
-function clearCalendar() {
+const clearCalendar = () => {
   $('#calendar').html('');
 };
 
