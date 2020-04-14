@@ -2,6 +2,12 @@ class RecurringEventsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event, only: %i[show update destroy]
 
+  def public
+    @recurring_events = RecurringEvent.public_events.all.map(&:events).flatten
+
+    render json: @recurring_events, adapter: :attributes
+  end
+
   def show
     @next_date =
       @recurring_event.next_date(recurring_event_params[:start_date])

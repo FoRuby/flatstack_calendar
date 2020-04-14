@@ -4,15 +4,18 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  resource :calendar do
-    member do
-      get 'simple_events'
-      get 'recurring_events'
-      get 'user_simple_events'
-      get 'user_recurring_events'
-    end
+  resource :calendar, only: :show
+
+  resources :recurring_events, only: %i[show create update destroy] do
+    get 'public', on: :collection
   end
 
-  resources :recurring_events
-  resources :simple_events
+  resources :simple_events, only: %i[show create update destroy] do
+    get 'public', on: :collection
+  end
+
+  namespace :user_events do
+    get 'simple'
+    get 'recurring'
+  end
 end

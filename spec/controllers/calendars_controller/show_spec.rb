@@ -1,5 +1,6 @@
-RSpec.describe CalendarsController, type: :controller do
+require 'rails_helper'
 
+RSpec.describe CalendarsController, type: :controller do
   describe 'GET #show' do
     describe 'Authenticated user' do
       let(:user) { create :user }

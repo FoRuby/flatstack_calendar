@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe CalendarsController, type: :controller do
-  describe 'GET #simple_events' do
-    let!(:simple_events) { create_list :simple_event, 2, visibility: 'public' }
+RSpec.describe UserEventsController, type: :controller do
+  describe 'GET #simple' do
+    let(:user) { create :user }
+    let!(:simple_events) do
+      create_list :simple_event, 2, visibility: 'public', user: user
+    end
 
     describe 'Authenticated user' do
-      let(:user) { create :user }
-
       before do
         login user
-        get :simple_events, format: :json
+        get :simple, format: :json
       end
 
       it 'assign an array of all public simple events' do
@@ -26,7 +27,7 @@ RSpec.describe CalendarsController, type: :controller do
     end
 
     describe 'Unauthenticated user' do
-      before { get :simple_events, format: :json }
+      before { get :simple, format: :json }
 
       it 'does not assign an array of all public simple events' do
         expect(assigns(:simple_events)).to_not match_array simple_events

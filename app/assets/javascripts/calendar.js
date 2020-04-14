@@ -24,8 +24,8 @@ const eventCalendar = () => {
     eventLimit: true,
     defaultView: 'month_public',
     eventSources: [
-      '/calendar/simple_events.json',
-      '/calendar/recurring_events.json',
+      '/simple_events/public.json',
+      '/recurring_events/public.json',
     ],
 
     viewRender: viewRender,
@@ -89,20 +89,20 @@ const viewRender = view => {
 
   // Public Events => My Events
   if(view.name == 'month_private' && localStorage.getItem('previous_view') !== 'month_private') {
-    calendar.fullCalendar('removeEventSource', '/calendar/simple_events.json');
-    calendar.fullCalendar('removeEventSource', '/calendar/recurring_events.json');
+    calendar.fullCalendar('removeEventSource', '/simple_events/public.json');
+    calendar.fullCalendar('removeEventSource', '/recurring_events/public.json');
     calendar.fullCalendar('removeEvents');
-    calendar.fullCalendar('addEventSource', '/calendar/user_recurring_events.json');
-    calendar.fullCalendar('addEventSource', '/calendar/user_simple_events.json');
+    calendar.fullCalendar('addEventSource', '/user_events/recurring.json');
+    calendar.fullCalendar('addEventSource', '/user_events/simple.json');
    };
 
    // My Events => Public Events
   if(view.name == 'month_public' && localStorage.getItem('previous_view') !== 'month_public') {
-    calendar.fullCalendar('removeEventSource', '/calendar/user_recurring_events.json');
-    calendar.fullCalendar('removeEventSource', '/calendar/user_simple_events.json');
+    calendar.fullCalendar('removeEventSource', '/user_events/recurring.json');
+    calendar.fullCalendar('removeEventSource', '/user_events/simple.json');
     calendar.fullCalendar('removeEvents');
-    calendar.fullCalendar('addEventSource', '/calendar/simple_events.json');
-    calendar.fullCalendar('addEventSource', '/calendar/recurring_events.json');
+    calendar.fullCalendar('addEventSource', '/simple_events//public.json');
+    calendar.fullCalendar('addEventSource', '/recurring_events/public.json');
    };
 
    localStorage.setItem('previous_view', view.name);

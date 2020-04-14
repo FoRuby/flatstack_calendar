@@ -2,8 +2,13 @@ class SimpleEventsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event, only: %i[show update destroy]
 
-  def show
+  def public
+    @simple_events = SimpleEvent.public_events.all
+
+    render json: @simple_events, adapter: :attributes
   end
+
+  def show; end
 
   def create
     @simple_event = current_user.simple_events.new(simple_event_params)

@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   scope :public_events, -> { where(visibility: 'public') }
   scope :private_events, -> { where(visibility: 'private') }
-  scope :user_events, ->(user_id) { where(user_id: user_id) }
 
   COLOR_REGEX = /\A#[0-9a-f]{3,6}\z/i
   EVENT_TYPES = %w[private public]
