@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe CalendarsController, type: :controller do
-  describe 'GET #recurring_events' do
+RSpec.describe RecurringEventsController, type: :controller do
+  describe 'GET #public' do
     let!(:recurring_events) do
       create_list :recurring_event, 2, :daily, visibility: 'public'
     end
@@ -11,7 +11,7 @@ RSpec.describe CalendarsController, type: :controller do
 
       before do
         login user
-        get :recurring_events, format: :json
+        get :public, format: :json
       end
 
       it 'assign an array of public recurring_events' do
@@ -29,7 +29,7 @@ RSpec.describe CalendarsController, type: :controller do
     end
 
     describe 'Unauthenticated user' do
-      before { get :recurring_events, format: :json }
+      before { get :public, format: :json }
 
       it 'does not assign an array of public recurring_events' do
         expect(assigns(:recurring_events))
